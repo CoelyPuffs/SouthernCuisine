@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Text.RegularExpressions;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -24,26 +25,44 @@ namespace SouthernCuisine
             WebClient client = new WebClient();
             string fullMenu = client.DownloadString("http://www.southern.edu/administration/food/");
             string dayToday = DateTime.Now.DayOfWeek.ToString();
+            if (dayToday == "Saturday")
+            {
+                dayToday = "Sabbath";
+            }
             int dayStartIndex = fullMenu.IndexOf("Menu for " + dayToday);
             int dayEndIndex = fullMenu.IndexOf("</td>", dayStartIndex);
-            string dayMenu = fullMenu.Substring(dayStartIndex, dayEndIndex);
+            string dayMenu = fullMenu.Substring(dayStartIndex, dayEndIndex - dayStartIndex);
 
             string[] meals = { "Breakfast", "Grab n Go", "Lunch", "International Bar", "Grab n Go", "Supper" };
 
             string displayMenu = "";
             int mealStartIndex = 0;
+            int mealEndIndex = 0;
             foreach (string meal in meals)
             {
-                mealStartIndex = dayMenu.IndexOf(meal);
-                mealStartIndex = dayMenu.IndexOf("m.<") + 2;
-                mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
-                displayMenu += mealMenu(dayMenu, mealStartIndex) + '\n';
+                if (dayMenu.IndexOf(meal) != -1)
+                {
+                    mealStartIndex = dayMenu.IndexOf(meal);
+                    mealStartIndex = dayMenu.IndexOf("m.<", mealStartIndex) + 2;
+                    mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
+                    mealEndIndex = dayMenu.IndexOf("</p>", mealStartIndex);
+
+                    displayMenu += meal + '\n' + dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex) + '\n';
+                }
             }
 
             displayMenu = displayMenu.Replace("&amp;", "&");
             displayMenu = displayMenu.Replace("<br>", ", ");
+            displayMenu = Regex.Replace(displayMenu, "[<].[^<>].[>]", " ");
 
-            menuLabel.Text = displayMenu;
+            if (displayMenu != "")
+            {
+                menuLabel.Text = displayMenu;
+            }
+            else
+            {
+                menuLabel.Text = "No food today";
+            }
         }
 
         private void VMMenuButton_Clicked(object sender, EventArgs e)
@@ -51,18 +70,12 @@ namespace SouthernCuisine
 
         }
 
-        public string mealMenu(string fullMenu, int startIndex)
-        {
-
-            return "";
-        }
-
         public int findEndOfHTMLTags(string menu, int startIndex)
         {
             int index = startIndex;
             while (menu[index] == '<')
             {
-                index = menu.IndexOf('>', startIndex) + 1;
+                index = menu.IndexOf('>', index) + 1;
             }
             return index;
         }

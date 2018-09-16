@@ -6,13 +6,14 @@
         <StackLayout>
             <Button
                 x:Name="CafMenuButton"
-                Text="Cafeteria Menu"/>
+                Text="Cafeteria Menu"
+                Clicked="CafMenuButton_Clicked"/>
             <Button
                 x:Name="VMMenuButton"
-                Text="Village Market Menu"/>
+                Text="Village Market Menu"
+                Clicked="VMMenuButton_Clicked"/>
             <Label 
                 x:Name="MenuLabel"
-                Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
         </StackLayout>

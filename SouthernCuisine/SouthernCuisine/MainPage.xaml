@@ -3,15 +3,19 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SouthernCuisine"
              x:Class="SouthernCuisine.MainPage">
-
-    <ContentPage
-        Title="Today's Menu"
-        x:Name="CurrentMenuPage"/>
-    <ContentPage
-        Title="All Menus"
-        x:Name="AllMenusPage"/>
-    <ContentPage
-        Title="Preferences"
-        x:Name="PreferencesPage"/>
-
+    <NavigationPage Title="Next Meal">
+        <x:Arguments>
+            <local:CurrentMenuPage/>
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="All Menus">
+        <x:Arguments>
+            <local:AllMenusPage/>
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Preferences">
+        <x:Arguments>
+            <local:PreferencesPage/>
+        </x:Arguments>
+    </NavigationPage>
 </TabbedPage>
