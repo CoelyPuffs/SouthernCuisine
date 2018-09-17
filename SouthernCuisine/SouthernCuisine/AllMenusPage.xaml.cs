@@ -78,6 +78,7 @@ namespace SouthernCuisine
             int dayStartIndex = fullMenu.IndexOf(dayToday);
             int dayEndIndex = fullMenu.IndexOf("</div>", dayStartIndex);
             string dayMenu = fullMenu.Substring(dayStartIndex, dayEndIndex - dayStartIndex);
+            dayMenu = dayMenu.Replace('\n', ' ');
 
             string[] meals = { "Breakfast", "Lunch", "Soup", "Supper" };
 
@@ -93,16 +94,15 @@ namespace SouthernCuisine
                     mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
                     mealEndIndex = dayMenu.IndexOf("</ul>", mealStartIndex);
 
-                    displayMenu += meal + '\n' + dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex) + '\n';
+                    displayMenu += meal + '\n' + dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex) + "\n\n";
                 }
             }
 
-            displayMenu = displayMenu.Replace('\n', ' ');
             displayMenu = displayMenu.Replace("&amp;", "&");
             displayMenu = displayMenu.Replace("&nbsp;", "");
             displayMenu = displayMenu.Replace("<br>", ", ");
-            displayMenu = displayMenu.Replace("                                                ", " ");
-            displayMenu = Regex.Replace(displayMenu, "<[^<>]*>", "");
+            displayMenu = Regex.Replace(displayMenu, @"[^\S\n]{2,}", "");
+            displayMenu = Regex.Replace(displayMenu, @"<[^<>]*>", "");
 
             if (displayMenu != "")
             {

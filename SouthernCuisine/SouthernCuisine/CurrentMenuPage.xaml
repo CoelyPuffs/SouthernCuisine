@@ -4,9 +4,16 @@
              x:Class="SouthernCuisine.CurrentMenuPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
+            <Label 
+                x:Name="CurrentCafLabel"
+                Text="Cafeteria Menu"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
+            <Label
+                x:Name="CurrentVMLabel"
+                Text="VM Menu"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
