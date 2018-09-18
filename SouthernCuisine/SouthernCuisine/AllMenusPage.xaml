@@ -12,13 +12,13 @@
                 x:Name="CafMenuButton"
                 Text="Cafeteria Menu"
                 Clicked="CafMenuButton_Clicked"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="FillAndExpand"
                 VerticalOptions="Start"/>
                 <Button
                 x:Name="VMMenuButton"
                 Text="Village Market Menu"
                 Clicked="VMMenuButton_Clicked"
-                HorizontalOptions="CenterAndExpand"
+                HorizontalOptions="FillAndExpand"
                 VerticalOptions="Start"/>
 
             </StackLayout>
