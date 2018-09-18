@@ -2,7 +2,8 @@
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SouthernCuisine"
-             x:Class="SouthernCuisine.MainPage">
+             x:Class="SouthernCuisine.MainPage"
+             Title="ChewSouthern">
     <NavigationPage Title="Next Meal">
         <x:Arguments>
             <local:CurrentMenuPage/>

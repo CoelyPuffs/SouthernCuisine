@@ -22,7 +22,9 @@ namespace SouthernCuisine
 
         public void setMenus()
         {
+            Label currentCafMealLabel = Content.FindByName<Label>("CurrentCafMealLabel");
             Label currentCafLabel = Content.FindByName<Label>("CurrentCafLabel");
+            Label currentVMMealLabel = Content.FindByName<Label>("CurrentVMMealLabel");
             Label currentVMLabel = Content.FindByName<Label>("CurrentVMLabel");
             WebClient client = new WebClient();
             string fullCafMenu = client.DownloadString("http://www.southern.edu/administration/food/");
@@ -64,6 +66,10 @@ namespace SouthernCuisine
                 cafMeal = "Supper";
                 cafTimes = " 5 - 6:30 p.m.";
             }
+            else
+            {
+                dayToday = incrementDay(dayToday);
+            }
 
             if (hour < 9 || (hour == 9 && minutes < 30))
             {
@@ -94,7 +100,7 @@ namespace SouthernCuisine
                 cafMealStartIndex = findEndOfHTMLTags(cafDayMenu, cafMealStartIndex);
                 cafMealEndIndex = cafDayMenu.IndexOf("</p>", cafMealStartIndex);
 
-                displayCafMenu = cafMeal + " at the Cafeteria" + cafTimes + '\n' + cafDayMenu.Substring(cafMealStartIndex, cafMealEndIndex - cafMealStartIndex) + '\n';
+                displayCafMenu = cafDayMenu.Substring(cafMealStartIndex, cafMealEndIndex - cafMealStartIndex) + '\n';
 
                 displayCafMenu = displayCafMenu.Replace("&amp;", "&");
                 displayCafMenu = displayCafMenu.Replace("<br>", ", ");
@@ -112,7 +118,7 @@ namespace SouthernCuisine
                 VMMealStartIndex = findEndOfHTMLTags(VMDayMenu, VMMealStartIndex);
                 VMMealEndIndex = VMDayMenu.IndexOf("</ul>", VMMealStartIndex);
 
-                displayVMMenu = VMMeal + " at the Village Market" + VMTimes + '\n' + VMDayMenu.Substring(VMMealStartIndex, VMMealEndIndex - VMMealStartIndex) + '\n';
+                displayVMMenu = VMDayMenu.Substring(VMMealStartIndex, VMMealEndIndex - VMMealStartIndex) + '\n';
 
                 displayVMMenu = displayVMMenu.Replace("&amp;", "&");
                 displayVMMenu = displayVMMenu.Replace("&nbsp;", "");
@@ -125,7 +131,9 @@ namespace SouthernCuisine
                 displayVMMenu = VMMeal + " at the Village Market" + '\n' + "No food served here for this meal today";
             }
 
+            currentCafMealLabel.Text = cafMeal + " at the Cafeteria" + '\n' + cafTimes;
             currentCafLabel.Text = displayCafMenu;
+            currentVMMealLabel.Text = VMMeal + " at the Village Market" + '\n' + VMTimes;
             currentVMLabel.Text = displayVMMenu;
         }
 
@@ -137,6 +145,29 @@ namespace SouthernCuisine
                 index = menu.IndexOf('>', index) + 1;
             }
             return index;
+        }
+
+        public string incrementDay(string dayToday)
+        {
+            switch (dayToday)
+            {
+                case "Sunday":
+                    return "Monday";
+                case "Monday":
+                    return "Tuesday";
+                case "Tuesday":
+                    return "Wednesday";
+                case "Wednesday":
+                    return "Thursday";
+                case "Thursday":
+                    return "Friday";
+                case "Friday":
+                    return "Sabbath";
+                case "Sabbath":
+                    return "Sunday";
+                default:
+                    return "StarveDay";
+            }
         }
     }
 }

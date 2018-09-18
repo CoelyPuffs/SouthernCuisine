@@ -1,19 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SouthernCuisine.CurrentMenuPage">
+             x:Class="SouthernCuisine.CurrentMenuPage"
+             Title="ChewSouthern: What's next?">
     <ContentPage.Content>
         <StackLayout>
+            <Label
+                x:Name="CurrentCafMealLabel"
+                Text="Upcoming Meal"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                Font="Bold, 20"/>
             <Label 
                 x:Name="CurrentCafLabel"
                 Text="Cafeteria Menu"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                VerticalOptions="Start" 
+                HorizontalOptions="Start" 
+                Margin="10, 0, 10, 0"
+                Font="20"/>
+            <Label
+                x:Name="CurrentVMMealLabel"
+                Text="Upcoming Meal"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                Font="Bold, 20"/>
             <Label
                 x:Name="CurrentVMLabel"
                 Text="VM Menu"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"/>
+                VerticalOptions="Start"
+                HorizontalOptions="Start"
+                Margin="10, 0, 10, 0"
+                Font="20"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

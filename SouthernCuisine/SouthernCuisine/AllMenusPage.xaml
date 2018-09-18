@@ -1,21 +1,75 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SouthernCuisine.AllMenusPage">
+             x:Class="SouthernCuisine.AllMenusPage"
+             Title="ChewSouthern: All the Menus">
     <ContentPage.Content>
-        <StackLayout>
-            <Button
+        <StackLayout
+            Orientation="Vertical">
+            <StackLayout
+            Orientation="Horizontal">
+                <Button
                 x:Name="CafMenuButton"
                 Text="Cafeteria Menu"
-                Clicked="CafMenuButton_Clicked"/>
-            <Button
+                Clicked="CafMenuButton_Clicked"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Start"/>
+                <Button
                 x:Name="VMMenuButton"
                 Text="Village Market Menu"
-                Clicked="VMMenuButton_Clicked"/>
-            <Label 
-                x:Name="MenuLabel"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+                Clicked="VMMenuButton_Clicked"
+                HorizontalOptions="CenterAndExpand"
+                VerticalOptions="Start"/>
+
+            </StackLayout>
+            <ScrollView>
+                <StackLayout>
+                <Label
+                    x:Name="BreakfastLabel"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Center"
+                    Font="Bold, 20"/>
+                <Label
+                    x:Name="BreakfastMenuLabel"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Start"
+                    Margin="10, 0, 10, 0"
+                    Font="20"/>
+                <Label
+                    x:Name="LunchLabel"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Center"
+                    Font="Bold, 20"/>
+                <Label
+                    x:Name="LunchMenuLabel"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Start"
+                    Margin="10, 0, 10, 0"
+                    Font="20"/>
+                <Label
+                    x:Name="OtherLabel"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Center"
+                    Font="Bold, 20"/>
+                <Label
+                    x:Name="OtherMenuLabel"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Start"
+                    Margin="10, 0, 10, 0"
+                    Font="20"/>
+                <Label
+                    x:Name="SupperLabel"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Center"
+                    Font="Bold, 20"/>
+                    <Label
+                    x:Name="SupperMenuLabel"
+                    VerticalOptions="Start"
+                    HorizontalOptions="Start"
+                    Margin="10, 0, 10, 0"
+                    Font="20"/>
+                </StackLayout>
+            </ScrollView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
