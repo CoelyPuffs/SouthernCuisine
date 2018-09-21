@@ -4,33 +4,39 @@
              x:Class="SouthernCuisine.CurrentMenuPage"
              Title="ChewSouthern: What's next?">
     <ContentPage.Content>
-        <StackLayout>
-            <Label
+        <ScrollView>
+            <StackLayout>
+                <Label
                 x:Name="CurrentCafMealLabel"
                 Text="Upcoming Meal"
                 VerticalOptions="Start"
                 HorizontalOptions="Center"
-                Font="Bold, 20"/>
-            <Label 
+                Font="Bold, 20"
+                BackgroundColor="Transparent"/>
+                <Label 
                 x:Name="CurrentCafLabel"
                 Text="Cafeteria Menu"
                 VerticalOptions="Start" 
                 HorizontalOptions="Start" 
                 Margin="10, 0, 10, 0"
-                Font="20"/>
-            <Label
+                Font="20"
+                BackgroundColor="Transparent"/>
+                <Label
                 x:Name="CurrentVMMealLabel"
                 Text="Upcoming Meal"
                 VerticalOptions="Start"
                 HorizontalOptions="Center"
-                Font="Bold, 20"/>
-            <Label
+                Font="Bold, 20"
+                BackgroundColor="Transparent"/>
+                <Label
                 x:Name="CurrentVMLabel"
                 Text="VM Menu"
                 VerticalOptions="Start"
                 HorizontalOptions="Start"
                 Margin="10, 0, 10, 0"
-                Font="20"/>
-        </StackLayout>
+                Font="20"
+                BackgroundColor="Transparent"/>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

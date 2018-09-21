@@ -9,9 +9,12 @@ namespace SouthernCuisine
 	{
 		public App ()
 		{
-			InitializeComponent();
-
-			MainPage = new MainPage();
+			InitializeComponent ();
+            if (!Current.Properties.ContainsKey("nightMode"))
+            {
+                Current.Properties.Add("nightMode", false);
+            }
+            MainPage = new MainPage();
 		}
 
 		protected override void OnStart ()

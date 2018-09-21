@@ -3,11 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SouthernCuisine.PreferencesPage"
              Title="ChewSouthern: My Preferences">
+    <ContentPage.Resources>
+        
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Switch
+                x:Name="DayNightSwitch"
+                Toggled="DayNightSwitch_Toggled"/>
+            <Label 
+                x:Name="testLabel"
+                Text="Welcome to Xamarin.Forms!"
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="CenterAndExpand"
+                BackgroundColor="Transparent"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

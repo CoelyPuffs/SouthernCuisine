@@ -14,18 +14,45 @@ namespace SouthernCuisine
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CurrentMenuPage : ContentPage
 	{
-		public CurrentMenuPage ()
+        public Label currentCafMealLabel;
+        public Label currentCafLabel;
+        public Label currentVMMealLabel;
+        public Label currentVMLabel;
+
+        public CurrentMenuPage ()
 		{
 			InitializeComponent ();
+
+            currentCafMealLabel = Content.FindByName<Label>("CurrentCafMealLabel");
+            currentCafLabel = Content.FindByName<Label>("CurrentCafLabel");
+            currentVMMealLabel = Content.FindByName<Label>("CurrentVMMealLabel");
+            currentVMLabel = Content.FindByName<Label>("CurrentVMLabel");
+
+            Appearing += (object sender, EventArgs e) =>
+            {
+                if (Convert.ToBoolean(Application.Current.Properties["nightMode"]) == false)
+                {
+                    currentCafMealLabel.TextColor = Color.Black;
+                    currentCafLabel.TextColor = Color.Black;
+                    currentVMMealLabel.TextColor = Color.Black;
+                    currentVMLabel.TextColor = Color.Black;
+                    //BackgroundColor = Color.White;
+                }
+                else
+                {
+                    currentCafMealLabel.TextColor = Color.White;
+                    currentCafLabel.TextColor = Color.White;
+                    currentVMMealLabel.TextColor = Color.White;
+                    currentVMLabel.TextColor = Color.White;
+                    //BackgroundColor = Color.Black;
+                }
+            };
+
             setMenus();
 		}
 
         public void setMenus()
         {
-            Label currentCafMealLabel = Content.FindByName<Label>("CurrentCafMealLabel");
-            Label currentCafLabel = Content.FindByName<Label>("CurrentCafLabel");
-            Label currentVMMealLabel = Content.FindByName<Label>("CurrentVMMealLabel");
-            Label currentVMLabel = Content.FindByName<Label>("CurrentVMLabel");
             WebClient client = new WebClient();
             string fullCafMenu = client.DownloadString("http://www.southern.edu/administration/food/");
             string fullVMMenu = client.DownloadString("http://www.southern.edu/administration/food/deli.html");
@@ -39,10 +66,11 @@ namespace SouthernCuisine
             }
 
             int cafDayStartIndex = fullCafMenu.IndexOf("Menu for " + dayToday);
-            int cafDayEndIndex = fullCafMenu.IndexOf("</td>", cafDayStartIndex);
+            int cafDayEndIndex = fullCafMenu.IndexOf("</div>", cafDayStartIndex);
             string cafDayMenu = fullCafMenu.Substring(cafDayStartIndex, cafDayEndIndex - cafDayStartIndex);
 
-            int VMDayStartIndex = fullVMMenu.IndexOf(dayToday);
+            int VMDayStartIndex = fullVMMenu.IndexOf("DELI MENU");
+            VMDayStartIndex = fullVMMenu.IndexOf(dayToday, VMDayStartIndex);
             int VMDayEndIndex = fullVMMenu.IndexOf("</div>", VMDayStartIndex);
             string VMDayMenu = fullVMMenu.Substring(VMDayStartIndex, VMDayEndIndex - VMDayStartIndex);
             VMDayMenu = VMDayMenu.Replace('\n', ' ');
@@ -103,12 +131,13 @@ namespace SouthernCuisine
                 displayCafMenu = cafDayMenu.Substring(cafMealStartIndex, cafMealEndIndex - cafMealStartIndex) + '\n';
 
                 displayCafMenu = displayCafMenu.Replace("&amp;", "&");
-                displayCafMenu = displayCafMenu.Replace("<br>", ", ");
+                displayCafMenu = displayCafMenu.Replace("<br>", "\n");
                 displayCafMenu = Regex.Replace(displayCafMenu, "<[^<>]*>", "");
+                displayCafMenu.TrimEnd('\n');
             }
             else
             {
-                displayCafMenu = cafMeal + " at the Cafeteria" + '\n' + "No food served here for this meal today";
+                displayCafMenu = "No food served here for this meal today";
             }
 
             if (VMDayMenu.IndexOf(VMMeal) != -1)
@@ -122,13 +151,14 @@ namespace SouthernCuisine
 
                 displayVMMenu = displayVMMenu.Replace("&amp;", "&");
                 displayVMMenu = displayVMMenu.Replace("&nbsp;", "");
-                displayVMMenu = displayVMMenu.Replace("<br>", ", ");
+                displayVMMenu = displayVMMenu.Replace("<br>", "\n");
                 displayVMMenu = Regex.Replace(displayVMMenu, @"[^\S\n]{2,}", "");
                 displayVMMenu = Regex.Replace(displayVMMenu, @"<[^<>]*>", "");
+                displayVMMenu.TrimEnd('\n');
             }
             else
             {
-                displayVMMenu = VMMeal + " at the Village Market" + '\n' + "No food served here for this meal today";
+                displayVMMenu = "No food served here for this meal today";
             }
 
             currentCafMealLabel.Text = cafMeal + " at the Cafeteria" + '\n' + cafTimes;

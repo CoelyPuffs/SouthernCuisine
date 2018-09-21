@@ -5,69 +5,121 @@
              Title="ChewSouthern: All the Menus">
     <ContentPage.Content>
         <StackLayout
-            Orientation="Vertical">
+                Orientation="Vertical">
             <StackLayout
-            Orientation="Horizontal">
+                Orientation="Horizontal">
                 <Button
-                x:Name="CafMenuButton"
-                Text="Cafeteria Menu"
-                Clicked="CafMenuButton_Clicked"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="Start"/>
+                    x:Name="CafMenuButton"
+                    Text="Cafeteria Menu"
+                    Clicked="CafMenuButton_Clicked"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"/>
                 <Button
-                x:Name="VMMenuButton"
-                Text="Village Market Menu"
-                Clicked="VMMenuButton_Clicked"
-                HorizontalOptions="FillAndExpand"
-                VerticalOptions="Start"/>
-
+                    x:Name="VMMenuButton"
+                    Text="Village Market Menu"
+                    Clicked="VMMenuButton_Clicked"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="Start"/>
+            </StackLayout>
+            <StackLayout
+                Orientation="Horizontal">
+                <Button
+                    x:Name="SundayButton"
+                    Text="Sun"
+                    Clicked="SundayButton_Clicked"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Start"/>
+                <Button
+                    x:Name="MondayButton"
+                    Text="Mon"
+                    Clicked="MondayButton_Clicked"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Start"/>
+                <Button
+                    x:Name="TuesdayButton"
+                    Text="Tue"
+                    Clicked="TuesdayButton_Clicked"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Start"/>
+                <Button
+                    x:Name="WednesdayButton"
+                    Text="Wed"
+                    Clicked="WednesdayButton_Clicked"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Start"/>
+                <Button
+                    x:Name="ThursdayButton"
+                    Text="Thu"
+                    Clicked="ThursdayButton_Clicked"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Start"/>
+                <Button
+                    x:Name="FridayButton"
+                    Text="Fri"
+                    Clicked="FridayButton_Clicked"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Start"/>
+                <Button
+                    x:Name="SaturdayButton"
+                    Text="Sat"
+                    Clicked="SaturdayButton_Clicked"
+                    HorizontalOptions="Fill"
+                    VerticalOptions="Start"/>
             </StackLayout>
             <ScrollView>
                 <StackLayout>
-                <Label
-                    x:Name="BreakfastLabel"
-                    VerticalOptions="Start"
-                    HorizontalOptions="Center"
-                    Font="Bold, 20"/>
-                <Label
-                    x:Name="BreakfastMenuLabel"
-                    VerticalOptions="Start"
-                    HorizontalOptions="Start"
-                    Margin="10, 0, 10, 0"
-                    Font="20"/>
-                <Label
-                    x:Name="LunchLabel"
-                    VerticalOptions="Start"
-                    HorizontalOptions="Center"
-                    Font="Bold, 20"/>
-                <Label
-                    x:Name="LunchMenuLabel"
-                    VerticalOptions="Start"
-                    HorizontalOptions="Start"
-                    Margin="10, 0, 10, 0"
-                    Font="20"/>
-                <Label
-                    x:Name="OtherLabel"
-                    VerticalOptions="Start"
-                    HorizontalOptions="Center"
-                    Font="Bold, 20"/>
-                <Label
-                    x:Name="OtherMenuLabel"
-                    VerticalOptions="Start"
-                    HorizontalOptions="Start"
-                    Margin="10, 0, 10, 0"
-                    Font="20"/>
-                <Label
-                    x:Name="SupperLabel"
-                    VerticalOptions="Start"
-                    HorizontalOptions="Center"
-                    Font="Bold, 20"/>
                     <Label
-                    x:Name="SupperMenuLabel"
-                    VerticalOptions="Start"
-                    HorizontalOptions="Start"
-                    Margin="10, 0, 10, 0"
-                    Font="20"/>
+                        x:Name="BreakfastLabel"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Center"
+                        Font="Bold, 20"
+                        BackgroundColor="Transparent"/>
+                    <Label
+                        x:Name="BreakfastMenuLabel"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Start"
+                        Margin="10, 0, 10, 0"
+                        Font="20"
+                        BackgroundColor="Transparent"/>
+                    <Label
+                        x:Name="LunchLabel"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Center"
+                        Font="Bold, 20"
+                        BackgroundColor="Transparent"/>
+                    <Label
+                        x:Name="LunchMenuLabel"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Start"
+                        Margin="10, 0, 10, 0"
+                        Font="20"
+                        BackgroundColor="Transparent"/>
+                    <Label
+                        x:Name="OtherLabel"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Center"
+                        Font="Bold, 20"
+                        BackgroundColor="Transparent"/>
+                    <Label
+                        x:Name="OtherMenuLabel"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Start"
+                        Margin="10, 0, 10, 0"
+                        Font="20"
+                        BackgroundColor="Transparent"/>
+                    <Label
+                        x:Name="SupperLabel"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Center"
+                        Font="Bold, 20"
+                        BackgroundColor="Transparent"/>
+                    <Label
+                        x:Name="SupperMenuLabel"
+                        VerticalOptions="Start"
+                        HorizontalOptions="Start"
+                        Margin="10, 0, 10, 0"
+                        Font="20"
+                        BackgroundColor="Transparent"/>
                 </StackLayout>
             </ScrollView>
         </StackLayout>
