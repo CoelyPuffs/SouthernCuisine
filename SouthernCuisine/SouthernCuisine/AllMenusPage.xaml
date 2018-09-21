@@ -8,64 +8,90 @@
                 Orientation="Vertical">
             <StackLayout
                 Orientation="Horizontal">
-                <Button
+            <Button
                     x:Name="CafMenuButton"
                     Text="Cafeteria Menu"
                     Clicked="CafMenuButton_Clicked"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"/>
-                <Button
+            <Button
                     x:Name="VMMenuButton"
                     Text="Village Market Menu"
                     Clicked="VMMenuButton_Clicked"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"/>
             </StackLayout>
-            <StackLayout
-                Orientation="Horizontal">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+            
                 <Button
                     x:Name="SundayButton"
-                    Text="Sun"
+                    Text="Su"
                     Clicked="SundayButton_Clicked"
                     HorizontalOptions="Fill"
-                    VerticalOptions="Start"/>
+                    VerticalOptions="Start"
+                    Grid.Row="0"
+                    Grid.Column="0"/>
                 <Button
                     x:Name="MondayButton"
-                    Text="Mon"
+                    Text="Mo"
                     Clicked="MondayButton_Clicked"
                     HorizontalOptions="Fill"
-                    VerticalOptions="Start"/>
+                    VerticalOptions="Start"
+                    Grid.Row="0"
+                    Grid.Column="1"/>
                 <Button
                     x:Name="TuesdayButton"
-                    Text="Tue"
+                    Text="Tu"
                     Clicked="TuesdayButton_Clicked"
                     HorizontalOptions="Fill"
-                    VerticalOptions="Start"/>
+                    VerticalOptions="Start"
+                    Grid.Row="0"
+                    Grid.Column="2"/>
                 <Button
                     x:Name="WednesdayButton"
-                    Text="Wed"
+                    Text="We"
                     Clicked="WednesdayButton_Clicked"
                     HorizontalOptions="Fill"
-                    VerticalOptions="Start"/>
+                    VerticalOptions="Start"
+                    Grid.Row="0"
+                    Grid.Column="3"/>
                 <Button
                     x:Name="ThursdayButton"
-                    Text="Thu"
+                    Text="Th"
                     Clicked="ThursdayButton_Clicked"
                     HorizontalOptions="Fill"
-                    VerticalOptions="Start"/>
+                    VerticalOptions="Start"
+                    Grid.Row="0"
+                    Grid.Column="4"/>
                 <Button
                     x:Name="FridayButton"
-                    Text="Fri"
+                    Text="Fr"
                     Clicked="FridayButton_Clicked"
                     HorizontalOptions="Fill"
-                    VerticalOptions="Start"/>
+                    VerticalOptions="Start"
+                    Grid.Row="0"
+                    Grid.Column="5"/>
                 <Button
                     x:Name="SaturdayButton"
-                    Text="Sat"
+                    Text="Sa"
                     Clicked="SaturdayButton_Clicked"
                     HorizontalOptions="Fill"
-                    VerticalOptions="Start"/>
-            </StackLayout>
+                    VerticalOptions="Start"
+                    Grid.Row="0"
+                    Grid.Column="6"/>
+            </Grid>
             <ScrollView>
                 <StackLayout>
                     <Label

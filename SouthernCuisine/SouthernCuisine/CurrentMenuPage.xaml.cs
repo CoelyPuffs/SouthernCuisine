@@ -36,6 +36,7 @@ namespace SouthernCuisine
                     currentCafLabel.TextColor = Color.Black;
                     currentVMMealLabel.TextColor = Color.Black;
                     currentVMLabel.TextColor = Color.Black;
+                    Application.Current.MainPage.BackgroundColor = Color.White;
                     //BackgroundColor = Color.White;
                 }
                 else
@@ -44,6 +45,7 @@ namespace SouthernCuisine
                     currentCafLabel.TextColor = Color.White;
                     currentVMMealLabel.TextColor = Color.White;
                     currentVMLabel.TextColor = Color.White;
+                    Application.Current.MainPage.BackgroundColor = Color.Black;
                     //BackgroundColor = Color.Black;
                 }
             };
@@ -133,7 +135,7 @@ namespace SouthernCuisine
                 displayCafMenu = displayCafMenu.Replace("&amp;", "&");
                 displayCafMenu = displayCafMenu.Replace("<br>", "\n");
                 displayCafMenu = Regex.Replace(displayCafMenu, "<[^<>]*>", "");
-                displayCafMenu.TrimEnd('\n');
+                displayCafMenu = Regex.Replace(displayCafMenu, @"\s+\z", "");
             }
             else
             {
@@ -143,18 +145,26 @@ namespace SouthernCuisine
             if (VMDayMenu.IndexOf(VMMeal) != -1)
             {
                 VMMealStartIndex = VMDayMenu.IndexOf(VMMeal);
-                VMMealStartIndex = VMDayMenu.IndexOf("m<", VMMealStartIndex) + 1;
+                if (VMDayMenu.IndexOf("m<", VMMealStartIndex) < 0)
+                {
+                    VMMealStartIndex = VMDayMenu.IndexOf("NO SUPPER", VMMealStartIndex);
+                }
+                else
+                {
+                    VMMealStartIndex = VMDayMenu.IndexOf("m<", VMMealStartIndex) + 1;
+                }
                 VMMealStartIndex = findEndOfHTMLTags(VMDayMenu, VMMealStartIndex);
                 VMMealEndIndex = VMDayMenu.IndexOf("</ul>", VMMealStartIndex);
 
                 displayVMMenu = VMDayMenu.Substring(VMMealStartIndex, VMMealEndIndex - VMMealStartIndex) + '\n';
 
                 displayVMMenu = displayVMMenu.Replace("&amp;", "&");
-                displayVMMenu = displayVMMenu.Replace("&nbsp;", "");
+                displayVMMenu = displayVMMenu.Replace("&nbsp;", " ");
                 displayVMMenu = displayVMMenu.Replace("<br>", "\n");
+                displayVMMenu = displayVMMenu.Replace("</li>", "\n");
                 displayVMMenu = Regex.Replace(displayVMMenu, @"[^\S\n]{2,}", "");
                 displayVMMenu = Regex.Replace(displayVMMenu, @"<[^<>]*>", "");
-                displayVMMenu.TrimEnd('\n');
+                displayVMMenu = Regex.Replace(displayVMMenu, @"\s+\z", "");
             }
             else
             {

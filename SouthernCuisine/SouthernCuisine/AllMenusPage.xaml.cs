@@ -58,6 +58,7 @@ namespace SouthernCuisine
                     otherMenuLabel.TextColor = Color.Black;
                     supperLabel.TextColor = Color.Black;
                     supperMenuLabel.TextColor = Color.Black;
+                    Application.Current.MainPage.BackgroundColor = Color.White;
                     //BackgroundColor = Color.White;
                 }
                 else
@@ -69,7 +70,8 @@ namespace SouthernCuisine
                     otherLabel.TextColor = Color.White;
                     otherMenuLabel.TextColor = Color.White;
                     supperLabel.TextColor = Color.White;
-                    supperMenuLabel.TextColor = Color.Black;
+                    supperMenuLabel.TextColor = Color.White;
+                    Application.Current.MainPage.BackgroundColor = Color.Black;
                     //BackgroundColor = Color.Black;
                 }
             };
@@ -77,7 +79,13 @@ namespace SouthernCuisine
 
         private void CafMenuButton_Clicked(object sender, EventArgs e)
         {
-            if (monSelected)
+            cafSelected = true;
+            VMSelected = false;
+            if (sunSelected)
+            {
+                //getCafMenu("Sunday");
+            }
+            else if (monSelected)
             {
                 getCafMenu("Monday");
             }
@@ -112,7 +120,13 @@ namespace SouthernCuisine
 
         private void VMMenuButton_Clicked(object sender, EventArgs e)
         {
-            if (monSelected)
+            VMSelected = true;
+            cafSelected = false;
+            if (sunSelected)
+            {
+                //getVMMenu("Sunday");
+            }
+            else if (monSelected)
             {
                 getVMMenu("Monday");
             }
@@ -163,14 +177,14 @@ namespace SouthernCuisine
             FridayButton.BackgroundColor = Color.LightGray;
             SaturdayButton.BackgroundColor = Color.LightGray;
 
-            if (VMSelected)
+            /*if (VMSelected)
             {
                 getVMMenu("Sunday");
             }
             else
             {
                 getCafMenu("Sunday");
-            }
+            }*/
         }
 
         private void MondayButton_Clicked(object sender, EventArgs e)
@@ -374,7 +388,7 @@ namespace SouthernCuisine
                 displayMenu = displayMenu.Replace("&amp;", "&");
                 displayMenu = displayMenu.Replace("<br>", "\n");
                 displayMenu = Regex.Replace(displayMenu, "<[^<>]*>", "");
-                displayMenu.TrimEnd('\n');
+                displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
             }
             if (displayMenu != "")
             {
@@ -403,7 +417,7 @@ namespace SouthernCuisine
                 displayMenu = displayMenu.Replace("&amp;", "&");
                 displayMenu = displayMenu.Replace("<br>", "\n");
                 displayMenu = Regex.Replace(displayMenu, "<[^<>]*>", "");
-                displayMenu.TrimEnd('\n');
+                displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
             }
             if (displayMenu != "")
             {
@@ -432,7 +446,7 @@ namespace SouthernCuisine
                 displayMenu = displayMenu.Replace("&amp;", "&");
                 displayMenu = displayMenu.Replace("<br>", "\n");
                 displayMenu = Regex.Replace(displayMenu, "<[^<>]*>", "");
-                displayMenu.TrimEnd('\n');
+                displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
             }
             if (displayMenu != "")
             {
@@ -461,7 +475,7 @@ namespace SouthernCuisine
                 displayMenu = displayMenu.Replace("&amp;", "&");
                 displayMenu = displayMenu.Replace("<br>", "\n");
                 displayMenu = Regex.Replace(displayMenu, "<[^<>]*>", "");
-                displayMenu.TrimEnd('\n');
+                displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
             }
             if (displayMenu != "")
             {
@@ -509,11 +523,12 @@ namespace SouthernCuisine
 
                 displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
                 displayMenu = displayMenu.Replace("&amp;", "&");
-                displayMenu = displayMenu.Replace("&nbsp;", "");
+                displayMenu = displayMenu.Replace("&nbsp;", " ");
                 displayMenu = displayMenu.Replace("<br>", "\n");
+                displayMenu = displayMenu.Replace("</li>", "\n");
                 displayMenu = Regex.Replace(displayMenu, @"[^\S\n]{2,}", "");
                 displayMenu = Regex.Replace(displayMenu, @"<[^<>]*>", "");
-                displayMenu.TrimEnd('\n');
+                displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
             }
             if (displayMenu != "")
             {
@@ -539,12 +554,12 @@ namespace SouthernCuisine
 
                 displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
                 displayMenu = displayMenu.Replace("&amp;", "&");
-                displayMenu = displayMenu.Replace("&nbsp;", "");
+                displayMenu = displayMenu.Replace("&nbsp;", " ");
                 displayMenu = displayMenu.Replace("<br>", "\n");
                 displayMenu = displayMenu.Replace("</li>", "\n");
                 displayMenu = Regex.Replace(displayMenu, @"[^\S\n]{2,}", "");
                 displayMenu = Regex.Replace(displayMenu, @"<[^<>]*>", "");
-                displayMenu.TrimEnd('\n');
+                displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
             }
             if (displayMenu != "")
             {
@@ -570,11 +585,12 @@ namespace SouthernCuisine
 
                 displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
                 displayMenu = displayMenu.Replace("&amp;", "&");
-                displayMenu = displayMenu.Replace("&nbsp;", "");
+                displayMenu = displayMenu.Replace("&nbsp;", " ");
                 displayMenu = displayMenu.Replace("<br>", "\n");
+                displayMenu = displayMenu.Replace("</li>", "\n");
                 displayMenu = Regex.Replace(displayMenu, @"[^\S\n]{2,}", "");
                 displayMenu = Regex.Replace(displayMenu, @"<[^<>]*>", "");
-                displayMenu.TrimEnd('\n');
+                displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
             }
             if (displayMenu != "")
             {
@@ -594,17 +610,25 @@ namespace SouthernCuisine
             if (dayMenu.IndexOf(meal) != -1)
             {
                 mealStartIndex = dayMenu.IndexOf(meal);
-                mealStartIndex = dayMenu.IndexOf("m<", mealStartIndex) + 1;
+                if (dayMenu.IndexOf("m<", mealStartIndex) < 0)
+                {
+                    mealStartIndex = dayMenu.IndexOf("NO SUPPER", mealStartIndex);
+                }
+                else
+                {
+                    mealStartIndex = dayMenu.IndexOf("m<", mealStartIndex) + 1;
+                }
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
                 mealEndIndex = dayMenu.IndexOf("</ul>", mealStartIndex);
 
                 displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
                 displayMenu = displayMenu.Replace("&amp;", "&");
-                displayMenu = displayMenu.Replace("&nbsp;", "");
+                displayMenu = displayMenu.Replace("&nbsp;", " ");
                 displayMenu = displayMenu.Replace("<br>", "\n");
+                displayMenu = displayMenu.Replace("</li>", "\n");
                 displayMenu = Regex.Replace(displayMenu, @"[^\S\n]{2,}", "");
                 displayMenu = Regex.Replace(displayMenu, @"<[^<>]*>", "");
-                displayMenu.TrimEnd('\n');
+                displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
             }
             if (displayMenu != "")
             {

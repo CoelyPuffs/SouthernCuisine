@@ -12,30 +12,50 @@ namespace SouthernCuisine
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PreferencesPage : ContentPage
 	{
-        public bool isNightMode;
+        //public bool isNightMode;
 
 		public PreferencesPage ()
 		{
 			InitializeComponent ();
-            Application.Current.Properties.TryGetValue("nightMode", out object isNightMode);
+            //Application.Current.Properties.TryGetValue("nightMode", out object isNightMode);
+            Appearing += (object sender, EventArgs e) =>
+            {
+                if (Convert.ToBoolean(Application.Current.Properties["nightMode"]) == false)
+                {
+                    DayNightSwitch.IsToggled = false;
+                    testLabel.TextColor = Color.Black;
+                    nightSwitchLabel.TextColor = Color.Black;
+                    //BackgroundColor = Color.White;
+                    Application.Current.MainPage.BackgroundColor = Color.White;
+                }
+                else
+                {
+                    DayNightSwitch.IsToggled = true;
+                    testLabel.TextColor = Color.White;
+                    nightSwitchLabel.TextColor = Color.White;
+                    //BackgroundColor = Color.Black;
+                    Application.Current.MainPage.BackgroundColor = Color.Black;
+                }
+            };
         }
 
         void DayNightSwitch_Toggled (object sender, EventArgs e)
         {
-            if (isNightMode)
+            if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
             {
                 testLabel.TextColor = Color.Black;
+                nightSwitchLabel.TextColor = Color.Black;
                 //BackgroundColor = Color.White;
                 Application.Current.MainPage.BackgroundColor = Color.White;
             }
             else
             {
                 testLabel.TextColor = Color.White;
+                nightSwitchLabel.TextColor = Color.White;
                 //BackgroundColor = Color.Black;
                 Application.Current.MainPage.BackgroundColor = Color.Black;
             }
-            Application.Current.Properties["nightMode"] = !isNightMode;
-            isNightMode = !isNightMode;
+            Application.Current.Properties["nightMode"] = !Convert.ToBoolean(Application.Current.Properties["nightMode"]);
         }
 	}
 }
