@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using Plugin.Connectivity;
+
 namespace SouthernCuisine
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
@@ -81,82 +83,96 @@ namespace SouthernCuisine
         {
             cafSelected = true;
             VMSelected = false;
-            if (sunSelected)
+            CafMenuButton.BackgroundColor = Color.LightBlue;
+            VMMenuButton.BackgroundColor = Color.LightGray;
+            if (CrossConnectivity.Current.IsConnected)
             {
-                //getCafMenu("Sunday");
-            }
-            else if (monSelected)
-            {
-                getCafMenu("Monday");
-            }
-            else if (tueSelected)
-            {
-                getCafMenu("Tuesday");
-            }
-            else if (wedSelected)
-            {
-                getCafMenu("Wednesday");
-            }
-            else if (thuSelected)
-            {
-                getCafMenu("Thursday");
-            }
-            else if (friSelected)
-            {
-                getCafMenu("Friday");
-            }
-            else if (satSelected)
-            {
-                getCafMenu("Saturday");
+                if (sunSelected)
+                {
+                    getCafMenu("Sunday");
+                }
+                else if (monSelected)
+                {
+                    getCafMenu("Monday");
+                }
+                else if (tueSelected)
+                {
+                    getCafMenu("Tuesday");
+                }
+                else if (wedSelected)
+                {
+                    getCafMenu("Wednesday");
+                }
+                else if (thuSelected)
+                {
+                    getCafMenu("Thursday");
+                }
+                else if (friSelected)
+                {
+                    getCafMenu("Friday");
+                }
+                else if (satSelected)
+                {
+                    getCafMenu("Saturday");
+                }
+                else
+                {
+                    string dayToday = DateTime.Now.DayOfWeek.ToString();
+                    getCafMenu(dayToday);
+                }
             }
             else
             {
-                string dayToday = DateTime.Now.DayOfWeek.ToString();
-                getCafMenu(dayToday);
+                noConnection();
             }
-            CafMenuButton.BackgroundColor = Color.LightBlue;
-            VMMenuButton.BackgroundColor = Color.LightGray;
         }
 
         private void VMMenuButton_Clicked(object sender, EventArgs e)
         {
             VMSelected = true;
             cafSelected = false;
-            if (sunSelected)
+            VMMenuButton.BackgroundColor = Color.LightBlue;
+            CafMenuButton.BackgroundColor = Color.LightGray;
+            if (CrossConnectivity.Current.IsConnected)
             {
-                //getVMMenu("Sunday");
-            }
-            else if (monSelected)
-            {
-                getVMMenu("Monday");
-            }
-            else if (tueSelected)
-            {
-                getVMMenu("Tuesday");
-            }
-            else if (wedSelected)
-            {
-                getVMMenu("Wednesday");
-            }
-            else if (thuSelected)
-            {
-                getVMMenu("Thursday");
-            }
-            else if (friSelected)
-            {
-                getVMMenu("Friday");
-            }
-            else if (satSelected)
-            {
-                getVMMenu("Saturday");
+                if (sunSelected)
+                {
+                    getVMMenu("Sunday");
+                }
+                else if (monSelected)
+                {
+                    getVMMenu("Monday");
+                }
+                else if (tueSelected)
+                {
+                    getVMMenu("Tuesday");
+                }
+                else if (wedSelected)
+                {
+                    getVMMenu("Wednesday");
+                }
+                else if (thuSelected)
+                {
+                    getVMMenu("Thursday");
+                }
+                else if (friSelected)
+                {
+                    getVMMenu("Friday");
+                }
+                else if (satSelected)
+                {
+                    getVMMenu("Saturday");
+                }
+                else
+                {
+                    string dayToday = DateTime.Now.DayOfWeek.ToString();
+                    getVMMenu(dayToday);
+                }
             }
             else
             {
-                string dayToday = DateTime.Now.DayOfWeek.ToString();
-                getVMMenu(dayToday);
+                noConnection();
             }
-            VMMenuButton.BackgroundColor = Color.LightBlue;
-            CafMenuButton.BackgroundColor = Color.LightGray;
         }
 
         private void SundayButton_Clicked(object sender, EventArgs e)
@@ -177,14 +193,21 @@ namespace SouthernCuisine
             FridayButton.BackgroundColor = Color.LightGray;
             SaturdayButton.BackgroundColor = Color.LightGray;
 
-            /*if (VMSelected)
+            if (CrossConnectivity.Current.IsConnected)
             {
-                getVMMenu("Sunday");
+                if (VMSelected)
+                {
+                    getVMMenu("Sunday");
+                }
+                else
+                {
+                    getCafMenu("Sunday");
+                }
             }
             else
             {
-                getCafMenu("Sunday");
-            }*/
+                noConnection();
+            }
         }
 
         private void MondayButton_Clicked(object sender, EventArgs e)
@@ -205,13 +228,20 @@ namespace SouthernCuisine
             FridayButton.BackgroundColor = Color.LightGray;
             SaturdayButton.BackgroundColor = Color.LightGray;
 
-            if (VMSelected)
+            if (CrossConnectivity.Current.IsConnected)
             {
-                getVMMenu("Monday");
+                if (VMSelected)
+                {
+                    getVMMenu("Monday");
+                }
+                else
+                {
+                    getCafMenu("Monday");
+                }
             }
             else
             {
-                getCafMenu("Monday");
+                noConnection();
             }
         }
 
@@ -233,13 +263,20 @@ namespace SouthernCuisine
             FridayButton.BackgroundColor = Color.LightGray;
             SaturdayButton.BackgroundColor = Color.LightGray;
 
-            if (VMSelected)
+            if (CrossConnectivity.Current.IsConnected)
             {
-                getVMMenu("Tuesday");
+                if (VMSelected)
+                {
+                    getVMMenu("Tuesday");
+                }
+                else
+                {
+                    getCafMenu("Tuesday");
+                }
             }
             else
             {
-                getCafMenu("Tuesday");
+                noConnection();
             }
         }
 
@@ -261,13 +298,20 @@ namespace SouthernCuisine
             FridayButton.BackgroundColor = Color.LightGray;
             SaturdayButton.BackgroundColor = Color.LightGray;
 
-            if (VMSelected)
+            if (CrossConnectivity.Current.IsConnected)
             {
-                getVMMenu("Wednesday");
+                if (VMSelected)
+                {
+                    getVMMenu("Wednesday");
+                }
+                else
+                {
+                    getCafMenu("Wednesday");
+                }
             }
             else
             {
-                getCafMenu("Wednesday");
+                noConnection();
             }
         }
 
@@ -289,13 +333,20 @@ namespace SouthernCuisine
             FridayButton.BackgroundColor = Color.LightGray;
             SaturdayButton.BackgroundColor = Color.LightGray;
 
-            if (VMSelected)
+            if (CrossConnectivity.Current.IsConnected)
             {
-                getVMMenu("Thursday");
+                if (VMSelected)
+                {
+                    getVMMenu("Thursday");
+                }
+                else
+                {
+                    getCafMenu("Thursday");
+                }
             }
             else
             {
-                getCafMenu("Thursday");
+                noConnection();
             }
         }
 
@@ -317,13 +368,20 @@ namespace SouthernCuisine
             FridayButton.BackgroundColor = Color.LightBlue;
             SaturdayButton.BackgroundColor = Color.LightGray;
 
-            if (VMSelected)
+            if (CrossConnectivity.Current.IsConnected)
             {
-                getVMMenu("Friday");
+                if (VMSelected)
+                {
+                    getVMMenu("Friday");
+                }
+                else
+                {
+                    getCafMenu("Friday");
+                }
             }
             else
             {
-                getCafMenu("Friday");
+                noConnection();
             }
         }
 
@@ -345,13 +403,20 @@ namespace SouthernCuisine
             FridayButton.BackgroundColor = Color.LightGray;
             SaturdayButton.BackgroundColor = Color.LightBlue;
 
-            if (VMSelected)
+            if (CrossConnectivity.Current.IsConnected)
             {
-                getVMMenu("Saturday");
+                if (VMSelected)
+                {
+                    getVMMenu("Saturday");
+                }
+                else
+                {
+                    getCafMenu("Saturday");
+                }
             }
             else
             {
-                getCafMenu("Saturday");
+                noConnection();
             }
         }
 
@@ -489,6 +554,14 @@ namespace SouthernCuisine
                 SupperLabel.IsVisible = false;
                 SupperMenuLabel.IsVisible = false;
             }
+            if (breakfastLabel.IsVisible == false &&
+                lunchLabel.IsVisible == false &&
+                otherLabel.IsVisible == false &&
+                supperLabel.IsVisible == false)
+            {
+                breakfastLabel.IsVisible = true;
+                breakfastLabel.Text = "No food at the Cafeteria today";
+            }
         }
 
         private void getVMMenu(string dayToday)
@@ -510,14 +583,23 @@ namespace SouthernCuisine
 
             //string[] meals = { "Breakfast", "Lunch", "Soup", "Supper" };
 
-            string meal = "Breakfast";
+            string meal = "Deli";
             string displayMenu = "";
             int mealStartIndex = 0;
             int mealEndIndex = 0;
             if (dayMenu.IndexOf(meal) != -1)
             {
                 mealStartIndex = dayMenu.IndexOf(meal);
-                mealStartIndex = dayMenu.IndexOf("m<", mealStartIndex) + 1;
+                if (mealStartIndex == -1)
+                {
+                    meal = "Breakfast";
+                    mealStartIndex = dayMenu.IndexOf(meal);
+                    mealStartIndex = dayMenu.IndexOf("m<", mealStartIndex) + 1;
+                }
+                else
+                {
+                    mealStartIndex = dayMenu.IndexOf("Hot Deck", mealStartIndex) + 8;
+                }
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
                 mealEndIndex = dayMenu.IndexOf("</ul>", mealStartIndex);
 
@@ -534,7 +616,7 @@ namespace SouthernCuisine
             {
                 breakfastLabel.IsVisible = true;
                 breakfastMenuLabel.IsVisible = true;
-                breakfastLabel.Text = "Breakfast at the Village Market \n 7:00 a.m. - 9:30 a.m.";
+                breakfastLabel.Text = meal + " at the Village Market \n 7:00 a.m. - 9:30 a.m.";
                 breakfastMenuLabel.Text = displayMenu;
             }
             else
@@ -642,6 +724,14 @@ namespace SouthernCuisine
                 supperLabel.IsVisible = false;
                 SupperMenuLabel.IsVisible = false;
             }
+            if (breakfastLabel.IsVisible == false &&
+                lunchLabel.IsVisible == false &&
+                otherLabel.IsVisible == false &&
+                supperLabel.IsVisible == false)
+            {
+                breakfastLabel.IsVisible = true;
+                breakfastLabel.Text = "No food at the Village Market today";
+            }
         }
 
         public int findEndOfHTMLTags(string menu, int startIndex)
@@ -664,6 +754,15 @@ namespace SouthernCuisine
             otherMenuLabel.Text = "";
             supperLabel.Text = "";
             supperMenuLabel.Text = "";
+        }
+
+        public void noConnection()
+        {
+            clearLabels();
+            breakfastLabel.IsVisible = true;
+            breakfastMenuLabel.IsVisible = true;
+            breakfastLabel.Text = "Network connection not detected";
+            breakfastMenuLabel.Text = "Please check your Internet connection";
         }
     }
 }

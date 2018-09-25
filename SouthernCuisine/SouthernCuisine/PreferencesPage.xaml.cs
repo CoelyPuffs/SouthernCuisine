@@ -41,12 +41,13 @@ namespace SouthernCuisine
 
         void DayNightSwitch_Toggled (object sender, EventArgs e)
         {
-            if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
+            if (Convert.ToBoolean(Application.Current.Properties["nightMode"]) && DayNightSwitch.IsToggled == false)
             {
                 testLabel.TextColor = Color.Black;
                 nightSwitchLabel.TextColor = Color.Black;
                 //BackgroundColor = Color.White;
                 Application.Current.MainPage.BackgroundColor = Color.White;
+                Application.Current.Properties["nightMode"] = false;
             }
             else
             {
@@ -54,8 +55,9 @@ namespace SouthernCuisine
                 nightSwitchLabel.TextColor = Color.White;
                 //BackgroundColor = Color.Black;
                 Application.Current.MainPage.BackgroundColor = Color.Black;
+                Application.Current.Properties["nightMode"] = true;
             }
-            Application.Current.Properties["nightMode"] = !Convert.ToBoolean(Application.Current.Properties["nightMode"]);
+            
         }
 	}
 }

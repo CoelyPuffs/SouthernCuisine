@@ -9,6 +9,8 @@ using System.Text.RegularExpressions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
+using Plugin.Connectivity;
+
 namespace SouthernCuisine
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
@@ -37,6 +39,16 @@ namespace SouthernCuisine
                     currentVMMealLabel.TextColor = Color.Black;
                     currentVMLabel.TextColor = Color.Black;
                     Application.Current.MainPage.BackgroundColor = Color.White;
+                    if (CrossConnectivity.Current.IsConnected)
+                    {
+                        setMenus();
+                    }
+                    else
+                    {
+                        clearLabels();
+                        currentCafLabel.Text = "Network connection not detected";
+                        currentCafMealLabel.Text = "Please check your Internet connection";
+                    }
                     //BackgroundColor = Color.White;
                 }
                 else
@@ -46,11 +58,19 @@ namespace SouthernCuisine
                     currentVMMealLabel.TextColor = Color.White;
                     currentVMLabel.TextColor = Color.White;
                     Application.Current.MainPage.BackgroundColor = Color.Black;
+                    if (CrossConnectivity.Current.IsConnected)
+                    {
+                        setMenus();
+                    }
+                    else
+                    {
+                        clearLabels();
+                        currentCafLabel.Text = "Network connection not detected";
+                        currentCafMealLabel.Text = "Please check your Internet connection";
+                    }
                     //BackgroundColor = Color.Black;
                 }
             };
-
-            setMenus();
 		}
 
         public void setMenus()
@@ -208,6 +228,14 @@ namespace SouthernCuisine
                 default:
                     return "StarveDay";
             }
+        }
+
+        public void clearLabels()
+        {
+            currentCafLabel.Text = "";
+            currentCafMealLabel.Text = "";
+            currentVMLabel.Text = "";
+            currentVMMealLabel.Text = "";
         }
     }
 }
