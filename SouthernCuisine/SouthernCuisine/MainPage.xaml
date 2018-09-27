@@ -4,17 +4,23 @@
              xmlns:local="clr-namespace:SouthernCuisine"
              x:Class="SouthernCuisine.MainPage"
              Title="ChewSouthern">
-    <NavigationPage Title="Next Meal">
+    <NavigationPage 
+        x:Name="NextMealTab"
+        Title="Next Meal">
         <x:Arguments>
             <local:CurrentMenuPage/>
         </x:Arguments>
     </NavigationPage>
-    <NavigationPage Title="All Menus">
+    <NavigationPage 
+        x:Name="AllMenusTab"
+        Title="All Menus">
         <x:Arguments>
             <local:AllMenusPage/>
         </x:Arguments>
     </NavigationPage>
-    <NavigationPage Title="Preferences">
+    <NavigationPage 
+        x:Name="PreferencesTab"
+        Title="Preferences">
         <x:Arguments>
             <local:PreferencesPage/>
         </x:Arguments>

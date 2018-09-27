@@ -9,14 +9,15 @@ using Xamarin.Forms.Xaml;
 
 namespace SouthernCuisine
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class PreferencesPage : ContentPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class PreferencesPage : ContentPage
+    {
         //public bool isNightMode;
 
-		public PreferencesPage ()
-		{
-			InitializeComponent ();
+        public PreferencesPage()
+        {
+            InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
             //Application.Current.Properties.TryGetValue("nightMode", out object isNightMode);
             Appearing += (object sender, EventArgs e) =>
             {
@@ -39,12 +40,13 @@ namespace SouthernCuisine
             };
         }
 
-        void DayNightSwitch_Toggled (object sender, EventArgs e)
+        void DayNightSwitch_Toggled(object sender, EventArgs e)
         {
             if (Convert.ToBoolean(Application.Current.Properties["nightMode"]) && DayNightSwitch.IsToggled == false)
             {
                 testLabel.TextColor = Color.Black;
                 nightSwitchLabel.TextColor = Color.Black;
+                
                 //BackgroundColor = Color.White;
                 Application.Current.MainPage.BackgroundColor = Color.White;
                 Application.Current.Properties["nightMode"] = false;
@@ -57,7 +59,6 @@ namespace SouthernCuisine
                 Application.Current.MainPage.BackgroundColor = Color.Black;
                 Application.Current.Properties["nightMode"] = true;
             }
-            
         }
-	}
+    }
 }

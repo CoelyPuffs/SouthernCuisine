@@ -15,6 +15,8 @@ namespace SouthernCuisine
 		{
 			InitializeComponent();
             //On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
+
+            //this.OnPropertyChanged("nightMode");
         }
 	}
 }

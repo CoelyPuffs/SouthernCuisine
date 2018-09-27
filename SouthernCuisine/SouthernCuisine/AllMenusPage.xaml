@@ -5,23 +5,32 @@
              Title="ChewSouthern: All the Menus">
     <ContentPage.Content>
         <StackLayout
-                Orientation="Vertical">
+                Orientation="Vertical"
+                Spacing="0">
             <StackLayout
                 Orientation="Horizontal">
             <Button
                     x:Name="CafMenuButton"
-                    Text="Cafeteria Menu"
+                    Text="Cafeteria"
+                    TextColor="Black"
+                    Font="20"
+                    BackgroundColor="Transparent"
                     Clicked="CafMenuButton_Clicked"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"/>
             <Button
                     x:Name="VMMenuButton"
-                    Text="Village Market Menu"
+                    Text="Village Market"
+                    TextColor="Black"
+                    Font="20"
+                    BackgroundColor="Transparent"
                     Clicked="VMMenuButton_Clicked"
                     HorizontalOptions="FillAndExpand"
                     VerticalOptions="Start"/>
             </StackLayout>
-            <Grid>
+            <Grid
+                ColumnSpacing="0"
+                RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
@@ -34,35 +43,47 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-            
+
                 <Button
                     x:Name="SundayButton"
-                    Text="Su"
+                    Text="S"
+                    TextColor="Black"
+                    Font="20"
                     Clicked="SundayButton_Clicked"
+                    BackgroundColor="Transparent"
                     HorizontalOptions="Fill"
                     VerticalOptions="Start"
                     Grid.Row="0"
                     Grid.Column="0"/>
                 <Button
                     x:Name="MondayButton"
-                    Text="Mo"
+                    Text="M"
+                    TextColor="Black"
+                    Font="20"
                     Clicked="MondayButton_Clicked"
+                    BackgroundColor="Transparent"
                     HorizontalOptions="Fill"
                     VerticalOptions="Start"
                     Grid.Row="0"
                     Grid.Column="1"/>
                 <Button
                     x:Name="TuesdayButton"
-                    Text="Tu"
+                    Text="T"
+                    TextColor="Black"
+                    Font="20"
                     Clicked="TuesdayButton_Clicked"
+                    BackgroundColor="Transparent"
                     HorizontalOptions="Fill"
                     VerticalOptions="Start"
                     Grid.Row="0"
                     Grid.Column="2"/>
                 <Button
                     x:Name="WednesdayButton"
-                    Text="We"
+                    Text="W"
+                    TextColor="Black"
+                    Font="20"
                     Clicked="WednesdayButton_Clicked"
+                    BackgroundColor="Transparent"
                     HorizontalOptions="Fill"
                     VerticalOptions="Start"
                     Grid.Row="0"
@@ -70,15 +91,21 @@
                 <Button
                     x:Name="ThursdayButton"
                     Text="Th"
+                    TextColor="Black"
+                    Font="20"
                     Clicked="ThursdayButton_Clicked"
+                    BackgroundColor="Transparent"
                     HorizontalOptions="Fill"
                     VerticalOptions="Start"
                     Grid.Row="0"
                     Grid.Column="4"/>
                 <Button
                     x:Name="FridayButton"
-                    Text="Fr"
+                    Text="F"
+                    TextColor="Black"
+                    Font="20"
                     Clicked="FridayButton_Clicked"
+                    BackgroundColor="Transparent"
                     HorizontalOptions="Fill"
                     VerticalOptions="Start"
                     Grid.Row="0"
@@ -86,7 +113,10 @@
                 <Button
                     x:Name="SaturdayButton"
                     Text="Sa"
+                    TextColor="Black"
+                    Font="20"
                     Clicked="SaturdayButton_Clicked"
+                    BackgroundColor="Transparent"
                     HorizontalOptions="Fill"
                     VerticalOptions="Start"
                     Grid.Row="0"

@@ -16,14 +16,14 @@ namespace SouthernCuisine
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AllMenusPage : ContentPage
     {
-        public Label breakfastLabel;
+        /*public Label breakfastLabel;
         public Label breakfastMenuLabel;
         public Label lunchLabel;
         public Label lunchMenuLabel;
         public Label otherLabel;
         public Label otherMenuLabel;
         public Label supperLabel;
-        public Label supperMenuLabel;
+        public Label supperMenuLabel;*/
 
         bool cafSelected = false;
         bool VMSelected = false;
@@ -35,45 +35,69 @@ namespace SouthernCuisine
         bool friSelected = false;
         bool satSelected = false;
 
+        bool nightMode = Convert.ToBoolean(Application.Current.Properties["nightMode"]);
+
         public AllMenusPage()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
 
-            breakfastLabel = Content.FindByName<Label>("BreakfastLabel");
-            breakfastMenuLabel = Content.FindByName<Label>("BreakfastMenuLabel");
-            lunchLabel = Content.FindByName<Label>("LunchLabel");
-            lunchMenuLabel = Content.FindByName<Label>("LunchMenuLabel");
-            otherLabel = Content.FindByName<Label>("OtherLabel");
-            otherMenuLabel = Content.FindByName<Label>("OtherMenuLabel");
-            supperLabel = Content.FindByName<Label>("SupperLabel");
-            supperMenuLabel = Content.FindByName<Label>("SupperMenuLabel");
+            BreakfastLabel = Content.FindByName<Label>("BreakfastLabel");
+            BreakfastMenuLabel = Content.FindByName<Label>("BreakfastMenuLabel");
+            LunchLabel = Content.FindByName<Label>("LunchLabel");
+            LunchMenuLabel = Content.FindByName<Label>("LunchMenuLabel");
+            OtherLabel = Content.FindByName<Label>("OtherLabel");
+            OtherMenuLabel = Content.FindByName<Label>("OtherMenuLabel");
+            SupperLabel = Content.FindByName<Label>("SupperLabel");
+            SupperMenuLabel = Content.FindByName<Label>("SupperMenuLabel");
+
+            
 
             Appearing += (object sender, EventArgs e) =>
             {
-                if (Convert.ToBoolean(Application.Current.Properties["nightMode"]) == false)
+                nightMode = Convert.ToBoolean(Application.Current.Properties["nightMode"]);
+                if (!nightMode)
                 {
-                    breakfastLabel.TextColor = Color.Black;
-                    breakfastMenuLabel.TextColor = Color.Black;
-                    lunchLabel.TextColor = Color.Black;
-                    lunchMenuLabel.TextColor = Color.Black;
-                    otherLabel.TextColor = Color.Black;
-                    otherMenuLabel.TextColor = Color.Black;
-                    supperLabel.TextColor = Color.Black;
-                    supperMenuLabel.TextColor = Color.Black;
+                    BreakfastLabel.TextColor = Color.Black;
+                    BreakfastMenuLabel.TextColor = Color.Black;
+                    LunchLabel.TextColor = Color.Black;
+                    LunchMenuLabel.TextColor = Color.Black;
+                    OtherLabel.TextColor = Color.Black;
+                    OtherMenuLabel.TextColor = Color.Black;
+                    SupperLabel.TextColor = Color.Black;
+                    SupperMenuLabel.TextColor = Color.Black;
                     Application.Current.MainPage.BackgroundColor = Color.White;
+                    CafMenuButton.TextColor = Color.Black;
+                    VMMenuButton.TextColor = Color.Black;
+                    SundayButton.TextColor = Color.Black;
+                    MondayButton.TextColor = Color.Black;
+                    TuesdayButton.TextColor = Color.Black;
+                    WednesdayButton.TextColor = Color.Black;
+                    ThursdayButton.TextColor = Color.Black;
+                    FridayButton.TextColor = Color.Black;
+                    SaturdayButton.TextColor = Color.Black;
                     //BackgroundColor = Color.White;
                 }
                 else
                 {
-                    breakfastLabel.TextColor = Color.White;
-                    breakfastMenuLabel.TextColor = Color.White;
-                    lunchLabel.TextColor = Color.White;
-                    lunchMenuLabel.TextColor = Color.White;
-                    otherLabel.TextColor = Color.White;
-                    otherMenuLabel.TextColor = Color.White;
-                    supperLabel.TextColor = Color.White;
-                    supperMenuLabel.TextColor = Color.White;
+                    BreakfastLabel.TextColor = Color.White;
+                    BreakfastMenuLabel.TextColor = Color.White;
+                    LunchLabel.TextColor = Color.White;
+                    LunchMenuLabel.TextColor = Color.White;
+                    OtherLabel.TextColor = Color.White;
+                    OtherMenuLabel.TextColor = Color.White;
+                    SupperLabel.TextColor = Color.White;
+                    SupperMenuLabel.TextColor = Color.White;
                     Application.Current.MainPage.BackgroundColor = Color.Black;
+                    CafMenuButton.TextColor = Color.White;
+                    VMMenuButton.TextColor = Color.White;
+                    SundayButton.TextColor = Color.White;
+                    MondayButton.TextColor = Color.White;
+                    TuesdayButton.TextColor = Color.White;
+                    WednesdayButton.TextColor = Color.White;
+                    ThursdayButton.TextColor = Color.White;
+                    FridayButton.TextColor = Color.White;
+                    SaturdayButton.TextColor = Color.White;
                     //BackgroundColor = Color.Black;
                 }
             };
@@ -83,8 +107,17 @@ namespace SouthernCuisine
         {
             cafSelected = true;
             VMSelected = false;
-            CafMenuButton.BackgroundColor = Color.LightBlue;
-            VMMenuButton.BackgroundColor = Color.LightGray;
+
+            CafMenuButton.TextColor = Color.FromHex("1d9a69");
+            if (nightMode)
+            {
+                VMMenuButton.TextColor = Color.White;
+            }
+            else
+            {
+                VMMenuButton.TextColor = Color.Black;
+            }
+
             if (CrossConnectivity.Current.IsConnected)
             {
                 if (sunSelected)
@@ -131,8 +164,17 @@ namespace SouthernCuisine
         {
             VMSelected = true;
             cafSelected = false;
-            VMMenuButton.BackgroundColor = Color.LightBlue;
-            CafMenuButton.BackgroundColor = Color.LightGray;
+
+            VMMenuButton.TextColor = Color.FromHex("1d9a69");
+            if (nightMode)
+            {
+                CafMenuButton.TextColor = Color.White;
+            }
+            else
+            {
+                CafMenuButton.TextColor = Color.Black;
+            }
+            
             if (CrossConnectivity.Current.IsConnected)
             {
                 if (sunSelected)
@@ -185,13 +227,25 @@ namespace SouthernCuisine
             friSelected = false;
             satSelected = false;
 
-            SundayButton.BackgroundColor = Color.LightBlue;
-            MondayButton.BackgroundColor = Color.LightGray;
-            TuesdayButton.BackgroundColor = Color.LightGray;
-            WednesdayButton.BackgroundColor = Color.LightGray;
-            ThursdayButton.BackgroundColor = Color.LightGray;
-            FridayButton.BackgroundColor = Color.LightGray;
-            SaturdayButton.BackgroundColor = Color.LightGray;
+            SundayButton.TextColor = Color.FromHex("1d9a69");
+            if (nightMode)
+            {
+                MondayButton.TextColor = Color.White;
+                TuesdayButton.TextColor = Color.White;
+                WednesdayButton.TextColor = Color.White;
+                ThursdayButton.TextColor = Color.White;
+                FridayButton.TextColor = Color.White;
+                SaturdayButton.TextColor = Color.White;
+            }
+            else
+            {
+                MondayButton.TextColor = Color.Black;
+                TuesdayButton.TextColor = Color.Black;
+                WednesdayButton.TextColor = Color.Black;
+                ThursdayButton.TextColor = Color.Black;
+                FridayButton.TextColor = Color.Black;
+                SaturdayButton.TextColor = Color.Black;
+            }
 
             if (CrossConnectivity.Current.IsConnected)
             {
@@ -220,13 +274,25 @@ namespace SouthernCuisine
             friSelected = false;
             satSelected = false;
 
-            SundayButton.BackgroundColor = Color.LightGray;
-            MondayButton.BackgroundColor = Color.LightBlue;
-            TuesdayButton.BackgroundColor = Color.LightGray;
-            WednesdayButton.BackgroundColor = Color.LightGray;
-            ThursdayButton.BackgroundColor = Color.LightGray;
-            FridayButton.BackgroundColor = Color.LightGray;
-            SaturdayButton.BackgroundColor = Color.LightGray;
+            MondayButton.TextColor = Color.FromHex("1d9a69");
+            if (nightMode)
+            {
+                SundayButton.TextColor = Color.White;
+                TuesdayButton.TextColor = Color.White;
+                WednesdayButton.TextColor = Color.White;
+                ThursdayButton.TextColor = Color.White;
+                FridayButton.TextColor = Color.White;
+                SaturdayButton.TextColor = Color.White;
+            }
+            else
+            {
+                SundayButton.TextColor = Color.Black;
+                TuesdayButton.TextColor = Color.Black;
+                WednesdayButton.TextColor = Color.Black;
+                ThursdayButton.TextColor = Color.Black;
+                FridayButton.TextColor = Color.Black;
+                SaturdayButton.TextColor = Color.Black;
+            }
 
             if (CrossConnectivity.Current.IsConnected)
             {
@@ -255,13 +321,25 @@ namespace SouthernCuisine
             friSelected = false;
             satSelected = false;
 
-            SundayButton.BackgroundColor = Color.LightGray;
-            MondayButton.BackgroundColor = Color.LightGray;
-            TuesdayButton.BackgroundColor = Color.LightBlue;
-            WednesdayButton.BackgroundColor = Color.LightGray;
-            ThursdayButton.BackgroundColor = Color.LightGray;
-            FridayButton.BackgroundColor = Color.LightGray;
-            SaturdayButton.BackgroundColor = Color.LightGray;
+            TuesdayButton.TextColor = Color.FromHex("1d9a69");
+            if (nightMode)
+            {
+                SundayButton.TextColor = Color.White;
+                MondayButton.TextColor = Color.White;
+                WednesdayButton.TextColor = Color.White;
+                ThursdayButton.TextColor = Color.White;
+                FridayButton.TextColor = Color.White;
+                SaturdayButton.TextColor = Color.White;
+            }
+            else
+            {
+                SundayButton.TextColor = Color.Black;
+                MondayButton.TextColor = Color.Black;
+                WednesdayButton.TextColor = Color.Black;
+                ThursdayButton.TextColor = Color.Black;
+                FridayButton.TextColor = Color.Black;
+                SaturdayButton.TextColor = Color.Black;
+            }
 
             if (CrossConnectivity.Current.IsConnected)
             {
@@ -290,13 +368,25 @@ namespace SouthernCuisine
             friSelected = false;
             satSelected = false;
 
-            SundayButton.BackgroundColor = Color.LightGray;
-            MondayButton.BackgroundColor = Color.LightGray;
-            TuesdayButton.BackgroundColor = Color.LightGray;
-            WednesdayButton.BackgroundColor = Color.LightBlue;
-            ThursdayButton.BackgroundColor = Color.LightGray;
-            FridayButton.BackgroundColor = Color.LightGray;
-            SaturdayButton.BackgroundColor = Color.LightGray;
+            WednesdayButton.TextColor = Color.FromHex("1d9a69");
+            if (nightMode)
+            {
+                SundayButton.TextColor = Color.White;
+                MondayButton.TextColor = Color.White;
+                TuesdayButton.TextColor = Color.White;
+                ThursdayButton.TextColor = Color.White;
+                FridayButton.TextColor = Color.White;
+                SaturdayButton.TextColor = Color.White;
+            }
+            else
+            {
+                SundayButton.TextColor = Color.Black;
+                MondayButton.TextColor = Color.Black;
+                TuesdayButton.TextColor = Color.Black;
+                ThursdayButton.TextColor = Color.Black;
+                FridayButton.TextColor = Color.Black;
+                SaturdayButton.TextColor = Color.Black;
+            }
 
             if (CrossConnectivity.Current.IsConnected)
             {
@@ -325,13 +415,25 @@ namespace SouthernCuisine
             friSelected = false;
             satSelected = false;
 
-            SundayButton.BackgroundColor = Color.LightGray;
-            MondayButton.BackgroundColor = Color.LightGray;
-            TuesdayButton.BackgroundColor = Color.LightGray;
-            WednesdayButton.BackgroundColor = Color.LightGray;
-            ThursdayButton.BackgroundColor = Color.LightBlue;
-            FridayButton.BackgroundColor = Color.LightGray;
-            SaturdayButton.BackgroundColor = Color.LightGray;
+            ThursdayButton.TextColor = Color.FromHex("1d9a69");
+            if (nightMode)
+            {
+                SundayButton.TextColor = Color.White;
+                MondayButton.TextColor = Color.White;
+                TuesdayButton.TextColor = Color.White;
+                WednesdayButton.TextColor = Color.White;
+                FridayButton.TextColor = Color.White;
+                SaturdayButton.TextColor = Color.White;
+            }
+            else
+            {
+                SundayButton.TextColor = Color.Black;
+                MondayButton.TextColor = Color.Black;
+                TuesdayButton.TextColor = Color.Black;
+                WednesdayButton.TextColor = Color.Black;
+                FridayButton.TextColor = Color.Black;
+                SaturdayButton.TextColor = Color.Black;
+            }
 
             if (CrossConnectivity.Current.IsConnected)
             {
@@ -360,13 +462,25 @@ namespace SouthernCuisine
             friSelected = true;
             satSelected = false;
 
-            SundayButton.BackgroundColor = Color.LightGray;
-            MondayButton.BackgroundColor = Color.LightGray;
-            TuesdayButton.BackgroundColor = Color.LightGray;
-            WednesdayButton.BackgroundColor = Color.LightGray;
-            ThursdayButton.BackgroundColor = Color.LightGray;
-            FridayButton.BackgroundColor = Color.LightBlue;
-            SaturdayButton.BackgroundColor = Color.LightGray;
+            FridayButton.TextColor = Color.FromHex("1d9a69");
+            if (nightMode)
+            {
+                SundayButton.TextColor = Color.White;
+                MondayButton.TextColor = Color.White;
+                TuesdayButton.TextColor = Color.White;
+                WednesdayButton.TextColor = Color.White;
+                ThursdayButton.TextColor = Color.White;
+                SaturdayButton.TextColor = Color.White;
+            }
+            else
+            {
+                SundayButton.TextColor = Color.Black;
+                MondayButton.TextColor = Color.Black;
+                TuesdayButton.TextColor = Color.Black;
+                WednesdayButton.TextColor = Color.Black;
+                ThursdayButton.TextColor = Color.Black;
+                SaturdayButton.TextColor = Color.Black;
+            }
 
             if (CrossConnectivity.Current.IsConnected)
             {
@@ -395,13 +509,25 @@ namespace SouthernCuisine
             friSelected = false;
             satSelected = true;
 
-            SundayButton.BackgroundColor = Color.LightGray;
-            MondayButton.BackgroundColor = Color.LightGray;
-            TuesdayButton.BackgroundColor = Color.LightGray;
-            WednesdayButton.BackgroundColor = Color.LightGray;
-            ThursdayButton.BackgroundColor = Color.LightGray;
-            FridayButton.BackgroundColor = Color.LightGray;
-            SaturdayButton.BackgroundColor = Color.LightBlue;
+            SaturdayButton.TextColor = Color.FromHex("1d9a69");
+            if (nightMode)
+            {
+                SundayButton.TextColor = Color.White;
+                MondayButton.TextColor = Color.White;
+                TuesdayButton.TextColor = Color.White;
+                WednesdayButton.TextColor = Color.White;
+                ThursdayButton.TextColor = Color.White;
+                FridayButton.TextColor = Color.White;
+            }
+            else
+            {
+                SundayButton.TextColor = Color.Black;
+                MondayButton.TextColor = Color.Black;
+                TuesdayButton.TextColor = Color.Black;
+                WednesdayButton.TextColor = Color.Black;
+                ThursdayButton.TextColor = Color.Black;
+                FridayButton.TextColor = Color.Black;
+            }
 
             if (CrossConnectivity.Current.IsConnected)
             {
@@ -457,14 +583,14 @@ namespace SouthernCuisine
             }
             if (displayMenu != "")
             {
-                breakfastLabel.IsVisible = true;
-                breakfastMenuLabel.IsVisible = true;
-                breakfastLabel.Text = "Breakfast at the Cafeteria \n 6:30 - 10 a.m.";
-                breakfastMenuLabel.Text = displayMenu;
+                BreakfastLabel.IsVisible = true;
+                BreakfastMenuLabel.IsVisible = true;
+                BreakfastLabel.Text = "Breakfast at the Cafeteria \n 6:30 - 10 a.m.";
+                BreakfastMenuLabel.Text = displayMenu;
             }
             else
             {
-                breakfastLabel.IsVisible = false;
+                BreakfastLabel.IsVisible = false;
                 BreakfastMenuLabel.IsVisible = false;
             }
 
@@ -515,15 +641,15 @@ namespace SouthernCuisine
             }
             if (displayMenu != "")
             {
-                otherLabel.IsVisible = true;
-                otherMenuLabel.IsVisible = true;
+                OtherLabel.IsVisible = true;
+                OtherMenuLabel.IsVisible = true;
                 OtherLabel.Text = "International Bar at the Cafeteria";
                 OtherMenuLabel.Text = displayMenu;
             }
             else
             {
-                otherLabel.IsVisible = false;
-                otherMenuLabel.IsVisible = false;
+                OtherLabel.IsVisible = false;
+                OtherMenuLabel.IsVisible = false;
             }
 
             meal = "Supper";
@@ -554,13 +680,13 @@ namespace SouthernCuisine
                 SupperLabel.IsVisible = false;
                 SupperMenuLabel.IsVisible = false;
             }
-            if (breakfastLabel.IsVisible == false &&
-                lunchLabel.IsVisible == false &&
-                otherLabel.IsVisible == false &&
-                supperLabel.IsVisible == false)
+            if (BreakfastLabel.IsVisible == false &&
+                LunchLabel.IsVisible == false &&
+                OtherLabel.IsVisible == false &&
+                SupperLabel.IsVisible == false)
             {
-                breakfastLabel.IsVisible = true;
-                breakfastLabel.Text = "No food at the Cafeteria today";
+                BreakfastLabel.IsVisible = true;
+                BreakfastLabel.Text = "No food at the Cafeteria today";
             }
         }
 
@@ -590,16 +716,7 @@ namespace SouthernCuisine
             if (dayMenu.IndexOf(meal) != -1)
             {
                 mealStartIndex = dayMenu.IndexOf(meal);
-                if (mealStartIndex == -1)
-                {
-                    meal = "Breakfast";
-                    mealStartIndex = dayMenu.IndexOf(meal);
-                    mealStartIndex = dayMenu.IndexOf("m<", mealStartIndex) + 1;
-                }
-                else
-                {
-                    mealStartIndex = dayMenu.IndexOf("Hot Deck", mealStartIndex) + 8;
-                }
+                mealStartIndex = dayMenu.IndexOf("Hot Deck", mealStartIndex) + 8;
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
                 mealEndIndex = dayMenu.IndexOf("</ul>", mealStartIndex);
 
@@ -612,17 +729,34 @@ namespace SouthernCuisine
                 displayMenu = Regex.Replace(displayMenu, @"<[^<>]*>", "");
                 displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
             }
+            else
+            {
+                meal = "Breakfast";
+                mealStartIndex = dayMenu.IndexOf(meal);
+                mealStartIndex = dayMenu.IndexOf("m<", mealStartIndex) + 1;
+                mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
+                mealEndIndex = dayMenu.IndexOf("</ul>");
+
+                displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
+                displayMenu = displayMenu.Replace("&amp;", "&");
+                displayMenu = displayMenu.Replace("&nbsp;", " ");
+                displayMenu = displayMenu.Replace("<br>", "\n");
+                displayMenu = displayMenu.Replace("</li>", "\n");
+                displayMenu = Regex.Replace(displayMenu, @"[^\S\n]{2,}", "");
+                displayMenu = Regex.Replace(displayMenu, @"<[^<>]*>", "");
+                displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
+            }
             if (displayMenu != "")
             {
-                breakfastLabel.IsVisible = true;
-                breakfastMenuLabel.IsVisible = true;
-                breakfastLabel.Text = meal + " at the Village Market \n 7:00 a.m. - 9:30 a.m.";
-                breakfastMenuLabel.Text = displayMenu;
+                BreakfastLabel.IsVisible = true;
+                BreakfastMenuLabel.IsVisible = true;
+                BreakfastLabel.Text = meal + " at the Village Market \n 7:00 a.m. - 9:30 a.m.";
+                BreakfastMenuLabel.Text = displayMenu;
             }
             else
             {
-                breakfastLabel.IsVisible = false;
-                breakfastMenuLabel.IsVisible = false;
+                BreakfastLabel.IsVisible = false;
+                BreakfastMenuLabel.IsVisible = false;
             }
 
             meal = "Lunch";
@@ -645,14 +779,14 @@ namespace SouthernCuisine
             }
             if (displayMenu != "")
             {
-                lunchLabel.IsVisible = true;
+                LunchLabel.IsVisible = true;
                 LunchMenuLabel.IsVisible = true;
-                lunchLabel.Text = "Lunch at the Village Market \n 11 a.m. - 1:30 p.m.";
-                lunchMenuLabel.Text = displayMenu;
+                LunchLabel.Text = "Lunch at the Village Market \n 11 a.m. - 1:30 p.m.";
+                LunchMenuLabel.Text = displayMenu;
             }
             else
             {
-                lunchLabel.IsVisible = false;
+                LunchLabel.IsVisible = false;
                 LunchMenuLabel.IsVisible = false;
             }
 
@@ -676,15 +810,15 @@ namespace SouthernCuisine
             }
             if (displayMenu != "")
             {
-                otherLabel.IsVisible = true;
-                otherMenuLabel.IsVisible = true;
-                otherLabel.Text = "Soup at the Village Market";
-                otherMenuLabel.Text = displayMenu;
+                OtherLabel.IsVisible = true;
+                OtherMenuLabel.IsVisible = true;
+                OtherLabel.Text = "Soup at the Village Market";
+                OtherMenuLabel.Text = displayMenu;
             }
             else
             {
-                otherLabel.IsVisible = false;
-                otherMenuLabel.IsVisible = false;
+                OtherLabel.IsVisible = false;
+                OtherMenuLabel.IsVisible = false;
             }
 
             meal = "Supper";
@@ -714,23 +848,23 @@ namespace SouthernCuisine
             }
             if (displayMenu != "")
             {
-                supperLabel.IsVisible = true;
+                SupperLabel.IsVisible = true;
                 SupperMenuLabel.IsVisible = true;
-                supperLabel.Text = "Supper at the Village Market \n 5 a.m. - 7:30 p.m.";
-                supperMenuLabel.Text = displayMenu;
+                SupperLabel.Text = "Supper at the Village Market \n 5 a.m. - 7:30 p.m.";
+                SupperMenuLabel.Text = displayMenu;
             }
             else
             {
-                supperLabel.IsVisible = false;
+                SupperLabel.IsVisible = false;
                 SupperMenuLabel.IsVisible = false;
             }
-            if (breakfastLabel.IsVisible == false &&
-                lunchLabel.IsVisible == false &&
-                otherLabel.IsVisible == false &&
-                supperLabel.IsVisible == false)
+            if (BreakfastLabel.IsVisible == false &&
+                LunchLabel.IsVisible == false &&
+                OtherLabel.IsVisible == false &&
+                SupperLabel.IsVisible == false)
             {
-                breakfastLabel.IsVisible = true;
-                breakfastLabel.Text = "No food at the Village Market today";
+                BreakfastLabel.IsVisible = true;
+                BreakfastLabel.Text = "No food at the Village Market today";
             }
         }
 
@@ -746,23 +880,23 @@ namespace SouthernCuisine
 
         public void clearLabels()
         {
-            breakfastLabel.Text = "";
-            breakfastMenuLabel.Text = "";
-            lunchLabel.Text = "";
-            lunchMenuLabel.Text = "";
-            otherLabel.Text = "";
-            otherMenuLabel.Text = "";
-            supperLabel.Text = "";
-            supperMenuLabel.Text = "";
+            BreakfastLabel.Text = "";
+            BreakfastMenuLabel.Text = "";
+            LunchLabel.Text = "";
+            LunchMenuLabel.Text = "";
+            OtherLabel.Text = "";
+            OtherMenuLabel.Text = "";
+            SupperLabel.Text = "";
+            SupperMenuLabel.Text = "";
         }
 
         public void noConnection()
         {
             clearLabels();
-            breakfastLabel.IsVisible = true;
-            breakfastMenuLabel.IsVisible = true;
-            breakfastLabel.Text = "Network connection not detected";
-            breakfastMenuLabel.Text = "Please check your Internet connection";
+            BreakfastLabel.IsVisible = true;
+            BreakfastMenuLabel.IsVisible = true;
+            BreakfastLabel.Text = "Network connection not detected";
+            BreakfastMenuLabel.Text = "Please check your Internet connection";
         }
     }
 }

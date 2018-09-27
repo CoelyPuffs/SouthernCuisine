@@ -24,6 +24,7 @@ namespace SouthernCuisine
         public CurrentMenuPage ()
 		{
 			InitializeComponent ();
+            NavigationPage.SetHasNavigationBar(this, false);
 
             currentCafMealLabel = Content.FindByName<Label>("CurrentCafMealLabel");
             currentCafLabel = Content.FindByName<Label>("CurrentCafLabel");
