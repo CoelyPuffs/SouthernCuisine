@@ -12,12 +12,13 @@
                 Orientation="Horizontal">
                 <Label
                     x:Name="nightSwitchLabel"
-                    Text="Night Mode"
+                    Text="Night Mode (Experimental)"
                     Font="20"
-                    HorizontalOptions="Start"
+                    HorizontalOptions="StartAndExpand"
                     BackgroundColor="Transparent"/>
                 <Switch
                 x:Name="DayNightSwitch"
+                    HorizontalOptions="EndAndExpand"
                 Toggled="DayNightSwitch_Toggled"/>
             </StackLayout>
             <Label 

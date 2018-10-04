@@ -25,60 +25,70 @@ namespace SouthernCuisine
         public Label supperLabel;
         public Label supperMenuLabel;*/
 
-        bool cafSelected = false;
-        bool VMSelected = false;
-        bool sunSelected = false;
-        bool monSelected = false;
-        bool tueSelected = false;
-        bool wedSelected = false;
-        bool thuSelected = false;
-        bool friSelected = false;
-        bool satSelected = false;
-
-        bool nightMode = Convert.ToBoolean(Application.Current.Properties["nightMode"]);
+        string venueSelected = "Cafeteria";
+        string daySelected = DateTime.Now.DayOfWeek.ToString();
 
         public AllMenusPage()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-
-            BreakfastLabel = Content.FindByName<Label>("BreakfastLabel");
-            BreakfastMenuLabel = Content.FindByName<Label>("BreakfastMenuLabel");
-            LunchLabel = Content.FindByName<Label>("LunchLabel");
-            LunchMenuLabel = Content.FindByName<Label>("LunchMenuLabel");
-            OtherLabel = Content.FindByName<Label>("OtherLabel");
-            OtherMenuLabel = Content.FindByName<Label>("OtherMenuLabel");
-            SupperLabel = Content.FindByName<Label>("SupperLabel");
-            SupperMenuLabel = Content.FindByName<Label>("SupperMenuLabel");
-
-            
-
-            Appearing += (object sender, EventArgs e) =>
+            if (CrossConnectivity.Current.IsConnected)
             {
-                nightMode = Convert.ToBoolean(Application.Current.Properties["nightMode"]);
-                if (!nightMode)
-                {
-                    BreakfastLabel.TextColor = Color.Black;
-                    BreakfastMenuLabel.TextColor = Color.Black;
-                    LunchLabel.TextColor = Color.Black;
-                    LunchMenuLabel.TextColor = Color.Black;
-                    OtherLabel.TextColor = Color.Black;
-                    OtherMenuLabel.TextColor = Color.Black;
-                    SupperLabel.TextColor = Color.Black;
-                    SupperMenuLabel.TextColor = Color.Black;
-                    Application.Current.MainPage.BackgroundColor = Color.White;
-                    CafMenuButton.TextColor = Color.Black;
-                    VMMenuButton.TextColor = Color.Black;
-                    SundayButton.TextColor = Color.Black;
-                    MondayButton.TextColor = Color.Black;
-                    TuesdayButton.TextColor = Color.Black;
-                    WednesdayButton.TextColor = Color.Black;
-                    ThursdayButton.TextColor = Color.Black;
-                    FridayButton.TextColor = Color.Black;
-                    SaturdayButton.TextColor = Color.Black;
-                    //BackgroundColor = Color.White;
-                }
-                else
+                getCafMenu(daySelected);
+            }
+            else
+            {
+                noConnection();
+            }
+                
+
+            if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
+            {
+                BreakfastLabel.TextColor = Color.White;
+                BreakfastMenuLabel.TextColor = Color.White;
+                LunchLabel.TextColor = Color.White;
+                LunchMenuLabel.TextColor = Color.White;
+                OtherLabel.TextColor = Color.White;
+                OtherMenuLabel.TextColor = Color.White;
+                SupperLabel.TextColor = Color.White;
+                SupperMenuLabel.TextColor = Color.White;
+                CafMenuButton.TextColor = Color.White;
+                VMMenuButton.TextColor = Color.White;
+                SundayButton.TextColor = Color.White;
+                MondayButton.TextColor = Color.White;
+                TuesdayButton.TextColor = Color.White;
+                WednesdayButton.TextColor = Color.White;
+                ThursdayButton.TextColor = Color.White;
+                FridayButton.TextColor = Color.White;
+                SaturdayButton.TextColor = Color.White;
+            }
+            else
+            {
+                BreakfastLabel.TextColor = Color.Black;
+                BreakfastMenuLabel.TextColor = Color.Black;
+                LunchLabel.TextColor = Color.Black;
+                LunchMenuLabel.TextColor = Color.Black;
+                OtherLabel.TextColor = Color.Black;
+                OtherMenuLabel.TextColor = Color.Black;
+                SupperLabel.TextColor = Color.Black;
+                SupperMenuLabel.TextColor = Color.Black;
+                CafMenuButton.TextColor = Color.Black;
+                VMMenuButton.TextColor = Color.Black;
+                SundayButton.TextColor = Color.Black;
+                MondayButton.TextColor = Color.Black;
+                TuesdayButton.TextColor = Color.Black;
+                WednesdayButton.TextColor = Color.Black;
+                ThursdayButton.TextColor = Color.Black;
+                FridayButton.TextColor = Color.Black;
+                SaturdayButton.TextColor = Color.Black;
+
+            }
+
+            resetSelectionColor();
+
+            Appearing += delegate
+            {
+                if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
                 {
                     BreakfastLabel.TextColor = Color.White;
                     BreakfastMenuLabel.TextColor = Color.White;
@@ -88,7 +98,6 @@ namespace SouthernCuisine
                     OtherMenuLabel.TextColor = Color.White;
                     SupperLabel.TextColor = Color.White;
                     SupperMenuLabel.TextColor = Color.White;
-                    Application.Current.MainPage.BackgroundColor = Color.Black;
                     CafMenuButton.TextColor = Color.White;
                     VMMenuButton.TextColor = Color.White;
                     SundayButton.TextColor = Color.White;
@@ -98,18 +107,37 @@ namespace SouthernCuisine
                     ThursdayButton.TextColor = Color.White;
                     FridayButton.TextColor = Color.White;
                     SaturdayButton.TextColor = Color.White;
-                    //BackgroundColor = Color.Black;
                 }
+                else
+                {
+                    BreakfastLabel.TextColor = Color.Black;
+                    BreakfastMenuLabel.TextColor = Color.Black;
+                    LunchLabel.TextColor = Color.Black;
+                    LunchMenuLabel.TextColor = Color.Black;
+                    OtherLabel.TextColor = Color.Black;
+                    OtherMenuLabel.TextColor = Color.Black;
+                    SupperLabel.TextColor = Color.Black;
+                    SupperMenuLabel.TextColor = Color.Black;
+                    CafMenuButton.TextColor = Color.Black;
+                    VMMenuButton.TextColor = Color.Black;
+                    SundayButton.TextColor = Color.Black;
+                    MondayButton.TextColor = Color.Black;
+                    TuesdayButton.TextColor = Color.Black;
+                    WednesdayButton.TextColor = Color.Black;
+                    ThursdayButton.TextColor = Color.Black;
+                    FridayButton.TextColor = Color.Black;
+                    SaturdayButton.TextColor = Color.Black;
+                }
+                resetSelectionColor();
             };
         }
 
         private void CafMenuButton_Clicked(object sender, EventArgs e)
         {
-            cafSelected = true;
-            VMSelected = false;
+            venueSelected = "Cafeteria";
 
             CafMenuButton.TextColor = Color.FromHex("1d9a69");
-            if (nightMode)
+            if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
             {
                 VMMenuButton.TextColor = Color.White;
             }
@@ -120,39 +148,7 @@ namespace SouthernCuisine
 
             if (CrossConnectivity.Current.IsConnected)
             {
-                if (sunSelected)
-                {
-                    getCafMenu("Sunday");
-                }
-                else if (monSelected)
-                {
-                    getCafMenu("Monday");
-                }
-                else if (tueSelected)
-                {
-                    getCafMenu("Tuesday");
-                }
-                else if (wedSelected)
-                {
-                    getCafMenu("Wednesday");
-                }
-                else if (thuSelected)
-                {
-                    getCafMenu("Thursday");
-                }
-                else if (friSelected)
-                {
-                    getCafMenu("Friday");
-                }
-                else if (satSelected)
-                {
-                    getCafMenu("Saturday");
-                }
-                else
-                {
-                    string dayToday = DateTime.Now.DayOfWeek.ToString();
-                    getCafMenu(dayToday);
-                }
+                getCafMenu(daySelected);
             }
             else
             {
@@ -162,11 +158,10 @@ namespace SouthernCuisine
 
         private void VMMenuButton_Clicked(object sender, EventArgs e)
         {
-            VMSelected = true;
-            cafSelected = false;
+            venueSelected = "Village Market";
 
             VMMenuButton.TextColor = Color.FromHex("1d9a69");
-            if (nightMode)
+            if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
             {
                 CafMenuButton.TextColor = Color.White;
             }
@@ -177,39 +172,7 @@ namespace SouthernCuisine
             
             if (CrossConnectivity.Current.IsConnected)
             {
-                if (sunSelected)
-                {
-                    getVMMenu("Sunday");
-                }
-                else if (monSelected)
-                {
-                    getVMMenu("Monday");
-                }
-                else if (tueSelected)
-                {
-                    getVMMenu("Tuesday");
-                }
-                else if (wedSelected)
-                {
-                    getVMMenu("Wednesday");
-                }
-                else if (thuSelected)
-                {
-                    getVMMenu("Thursday");
-                }
-                else if (friSelected)
-                {
-                    getVMMenu("Friday");
-                }
-                else if (satSelected)
-                {
-                    getVMMenu("Saturday");
-                }
-                else
-                {
-                    string dayToday = DateTime.Now.DayOfWeek.ToString();
-                    getVMMenu(dayToday);
-                }
+                getVMMenu(daySelected);
             }
             else
             {
@@ -219,16 +182,10 @@ namespace SouthernCuisine
 
         private void SundayButton_Clicked(object sender, EventArgs e)
         {
-            sunSelected = true;
-            monSelected = false;
-            tueSelected = false;
-            wedSelected = false;
-            thuSelected = false;
-            friSelected = false;
-            satSelected = false;
+            daySelected = "Sunday";
 
             SundayButton.TextColor = Color.FromHex("1d9a69");
-            if (nightMode)
+            if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
             {
                 MondayButton.TextColor = Color.White;
                 TuesdayButton.TextColor = Color.White;
@@ -249,7 +206,7 @@ namespace SouthernCuisine
 
             if (CrossConnectivity.Current.IsConnected)
             {
-                if (VMSelected)
+                if (venueSelected == "Village Market")
                 {
                     getVMMenu("Sunday");
                 }
@@ -266,16 +223,10 @@ namespace SouthernCuisine
 
         private void MondayButton_Clicked(object sender, EventArgs e)
         {
-            sunSelected = false;
-            monSelected = true;
-            tueSelected = false;
-            wedSelected = false;
-            thuSelected = false;
-            friSelected = false;
-            satSelected = false;
+            daySelected = "Monday";
 
             MondayButton.TextColor = Color.FromHex("1d9a69");
-            if (nightMode)
+            if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
             {
                 SundayButton.TextColor = Color.White;
                 TuesdayButton.TextColor = Color.White;
@@ -296,7 +247,7 @@ namespace SouthernCuisine
 
             if (CrossConnectivity.Current.IsConnected)
             {
-                if (VMSelected)
+                if (venueSelected == "Village Market")
                 {
                     getVMMenu("Monday");
                 }
@@ -313,16 +264,10 @@ namespace SouthernCuisine
 
         private void TuesdayButton_Clicked(object sender, EventArgs e)
         {
-            sunSelected = false;
-            monSelected = false;
-            tueSelected = true;
-            wedSelected = false;
-            thuSelected = false;
-            friSelected = false;
-            satSelected = false;
+            daySelected = "Tuesday";
 
             TuesdayButton.TextColor = Color.FromHex("1d9a69");
-            if (nightMode)
+            if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
             {
                 SundayButton.TextColor = Color.White;
                 MondayButton.TextColor = Color.White;
@@ -343,7 +288,7 @@ namespace SouthernCuisine
 
             if (CrossConnectivity.Current.IsConnected)
             {
-                if (VMSelected)
+                if (venueSelected == "Village Market")
                 {
                     getVMMenu("Tuesday");
                 }
@@ -360,16 +305,10 @@ namespace SouthernCuisine
 
         private void WednesdayButton_Clicked(object sender, EventArgs e)
         {
-            sunSelected = false;
-            monSelected = false;
-            tueSelected = false;
-            wedSelected = true;
-            thuSelected = false;
-            friSelected = false;
-            satSelected = false;
+            daySelected = "Wednesday";
 
             WednesdayButton.TextColor = Color.FromHex("1d9a69");
-            if (nightMode)
+            if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
             {
                 SundayButton.TextColor = Color.White;
                 MondayButton.TextColor = Color.White;
@@ -390,7 +329,7 @@ namespace SouthernCuisine
 
             if (CrossConnectivity.Current.IsConnected)
             {
-                if (VMSelected)
+                if (venueSelected == "Village Market")
                 {
                     getVMMenu("Wednesday");
                 }
@@ -407,16 +346,10 @@ namespace SouthernCuisine
 
         private void ThursdayButton_Clicked(object sender, EventArgs e)
         {
-            sunSelected = false;
-            monSelected = false;
-            tueSelected = false;
-            wedSelected = false;
-            thuSelected = true;
-            friSelected = false;
-            satSelected = false;
+            daySelected = "Thursday";
 
             ThursdayButton.TextColor = Color.FromHex("1d9a69");
-            if (nightMode)
+            if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
             {
                 SundayButton.TextColor = Color.White;
                 MondayButton.TextColor = Color.White;
@@ -437,7 +370,7 @@ namespace SouthernCuisine
 
             if (CrossConnectivity.Current.IsConnected)
             {
-                if (VMSelected)
+                if (venueSelected == "Village Market")
                 {
                     getVMMenu("Thursday");
                 }
@@ -454,16 +387,10 @@ namespace SouthernCuisine
 
         private void FridayButton_Clicked(object sender, EventArgs e)
         {
-            sunSelected = false;
-            monSelected = false;
-            tueSelected = false;
-            wedSelected = false;
-            thuSelected = false;
-            friSelected = true;
-            satSelected = false;
+            daySelected = "Friday";
 
             FridayButton.TextColor = Color.FromHex("1d9a69");
-            if (nightMode)
+            if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
             {
                 SundayButton.TextColor = Color.White;
                 MondayButton.TextColor = Color.White;
@@ -484,7 +411,7 @@ namespace SouthernCuisine
 
             if (CrossConnectivity.Current.IsConnected)
             {
-                if (VMSelected)
+                if (venueSelected == "Village Market")
                 {
                     getVMMenu("Friday");
                 }
@@ -501,16 +428,10 @@ namespace SouthernCuisine
 
         private void SaturdayButton_Clicked(object sender, EventArgs e)
         {
-            sunSelected = false;
-            monSelected = false;
-            tueSelected = false;
-            wedSelected = false;
-            thuSelected = false;
-            friSelected = false;
-            satSelected = true;
+            daySelected = "Saturday";
 
             SaturdayButton.TextColor = Color.FromHex("1d9a69");
-            if (nightMode)
+            if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
             {
                 SundayButton.TextColor = Color.White;
                 MondayButton.TextColor = Color.White;
@@ -531,7 +452,7 @@ namespace SouthernCuisine
 
             if (CrossConnectivity.Current.IsConnected)
             {
-                if (VMSelected)
+                if (venueSelected == "Village Market")
                 {
                     getVMMenu("Saturday");
                 }
@@ -697,7 +618,11 @@ namespace SouthernCuisine
             //string dayToday = DateTime.Now.DayOfWeek.ToString();
             if (dayToday == "Saturday")
             {
-                dayToday = "Sabbath";
+                clearLabels();
+                BreakfastLabel.IsVisible = true;
+                BreakfastMenuLabel.IsVisible = true;
+                BreakfastLabel.Text = "No food at the Village Market today";
+                return;
             }
             int dayStartIndex = fullMenu.IndexOf("DELI MENU");
             dayStartIndex = fullMenu.IndexOf(dayToday, dayStartIndex);
@@ -709,13 +634,14 @@ namespace SouthernCuisine
 
             //string[] meals = { "Breakfast", "Lunch", "Soup", "Supper" };
 
-            string meal = "Deli";
+            string meal = "g>Deli";
             string displayMenu = "";
             int mealStartIndex = 0;
             int mealEndIndex = 0;
             if (dayMenu.IndexOf(meal) != -1)
             {
                 mealStartIndex = dayMenu.IndexOf(meal);
+                meal = "Deli";
                 mealStartIndex = dayMenu.IndexOf("Hot Deck", mealStartIndex) + 8;
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
                 mealEndIndex = dayMenu.IndexOf("</ul>", mealStartIndex);
@@ -897,6 +823,43 @@ namespace SouthernCuisine
             BreakfastMenuLabel.IsVisible = true;
             BreakfastLabel.Text = "Network connection not detected";
             BreakfastMenuLabel.Text = "Please check your Internet connection";
+        }
+
+        public void resetSelectionColor()
+        {
+            switch (venueSelected)
+            {
+                case "Cafeteria":
+                    CafMenuButton.TextColor = Color.FromHex("1d9a69");
+                    break;
+                case "Village Market":
+                    VMMenuButton.TextColor = Color.FromHex("1d9a69");
+                    break;
+            }
+            switch (daySelected)
+            {
+                case "Sunday":
+                    SundayButton.TextColor = Color.FromHex("1d9a69");
+                    break;
+                case "Monday":
+                    MondayButton.TextColor = Color.FromHex("1d9a69");
+                    break;
+                case "Tuesday":
+                    TuesdayButton.TextColor = Color.FromHex("1d9a69");
+                    break;
+                case "Wednesday":
+                    WednesdayButton.TextColor = Color.FromHex("1d9a69");
+                    break;
+                case "Thursday":
+                    ThursdayButton.TextColor = Color.FromHex("1d9a69");
+                    break;
+                case "Friday":
+                    FridayButton.TextColor = Color.FromHex("1d9a69");
+                    break;
+                case "Saturday":
+                    SaturdayButton.TextColor = Color.FromHex("1d9a69");
+                    break;
+            }
         }
     }
 }

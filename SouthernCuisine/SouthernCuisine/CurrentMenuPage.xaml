@@ -6,6 +6,9 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
+                <!--<Switch
+                    x:Name="TestingButton"
+                    />-->
                 <Label
                 x:Name="CurrentCafMealLabel"
                 Text="Upcoming Meal"
@@ -16,7 +19,7 @@
                 <Label 
                 x:Name="CurrentCafLabel"
                 Text="Cafeteria Menu"
-                VerticalOptions="Start" 
+                VerticalOptions="Start"
                 HorizontalOptions="Start" 
                 Margin="10, 0, 10, 0"
                 Font="20"

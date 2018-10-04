@@ -12,7 +12,7 @@ using Android.Widget;
 
 namespace SouthernCuisine.Droid
 {
-    [Activity(Label = "Chew Southern", Icon = "@drawable/Icon", Theme = "@style/splashscreen", MainLauncher = true, NoHistory = true)]
+    [Activity(Label = "ChewSouthern", Icon = "@drawable/Icon", Theme = "@style/splashscreen", MainLauncher = true, NoHistory = true)]
     public class SplashActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnResume()

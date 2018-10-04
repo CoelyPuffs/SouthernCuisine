@@ -16,60 +16,75 @@ namespace SouthernCuisine
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CurrentMenuPage : ContentPage
 	{
-        public Label currentCafMealLabel;
-        public Label currentCafLabel;
-        public Label currentVMMealLabel;
-        public Label currentVMLabel;
-
         public CurrentMenuPage ()
 		{
 			InitializeComponent ();
             NavigationPage.SetHasNavigationBar(this, false);
 
-            currentCafMealLabel = Content.FindByName<Label>("CurrentCafMealLabel");
-            currentCafLabel = Content.FindByName<Label>("CurrentCafLabel");
-            currentVMMealLabel = Content.FindByName<Label>("CurrentVMMealLabel");
-            currentVMLabel = Content.FindByName<Label>("CurrentVMLabel");
-
-            Appearing += (object sender, EventArgs e) =>
+            if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
             {
-                if (Convert.ToBoolean(Application.Current.Properties["nightMode"]) == false)
+                CurrentCafMealLabel.TextColor = Color.White;
+                CurrentCafLabel.TextColor = Color.White;
+                CurrentVMMealLabel.TextColor = Color.White;
+                CurrentVMLabel.TextColor = Color.White;
+                if (CrossConnectivity.Current.IsConnected)
                 {
-                    currentCafMealLabel.TextColor = Color.Black;
-                    currentCafLabel.TextColor = Color.Black;
-                    currentVMMealLabel.TextColor = Color.Black;
-                    currentVMLabel.TextColor = Color.Black;
-                    Application.Current.MainPage.BackgroundColor = Color.White;
-                    if (CrossConnectivity.Current.IsConnected)
-                    {
-                        setMenus();
-                    }
-                    else
-                    {
-                        clearLabels();
-                        currentCafLabel.Text = "Network connection not detected";
-                        currentCafMealLabel.Text = "Please check your Internet connection";
-                    }
-                    //BackgroundColor = Color.White;
+                    setMenus();
                 }
                 else
                 {
-                    currentCafMealLabel.TextColor = Color.White;
-                    currentCafLabel.TextColor = Color.White;
-                    currentVMMealLabel.TextColor = Color.White;
-                    currentVMLabel.TextColor = Color.White;
-                    Application.Current.MainPage.BackgroundColor = Color.Black;
+                    noConnection();
+                }
+            }
+            else
+            {
+                CurrentCafMealLabel.TextColor = Color.Black;
+                CurrentCafLabel.TextColor = Color.Black;
+                CurrentVMMealLabel.TextColor = Color.Black;
+                CurrentVMLabel.TextColor = Color.Black;
+                if (CrossConnectivity.Current.IsConnected)
+                {
+                    setMenus();
+                }
+                else
+                {
+                    noConnection();
+                }
+                //BackgroundColor = Color.White;
+            }
+
+            Appearing += delegate
+            {
+                if (Convert.ToBoolean(Application.Current.Properties["nightMode"]))
+                {
+                    CurrentCafMealLabel.TextColor = Color.White;
+                    CurrentCafLabel.TextColor = Color.White;
+                    CurrentVMMealLabel.TextColor = Color.White;
+                    CurrentVMLabel.TextColor = Color.White;
                     if (CrossConnectivity.Current.IsConnected)
                     {
                         setMenus();
                     }
                     else
                     {
-                        clearLabels();
-                        currentCafLabel.Text = "Network connection not detected";
-                        currentCafMealLabel.Text = "Please check your Internet connection";
+                        noConnection();
                     }
-                    //BackgroundColor = Color.Black;
+                }
+                else
+                {
+                    CurrentCafMealLabel.TextColor = Color.Black;
+                    CurrentCafLabel.TextColor = Color.Black;
+                    CurrentVMMealLabel.TextColor = Color.Black;
+                    CurrentVMLabel.TextColor = Color.Black;
+                    if (CrossConnectivity.Current.IsConnected)
+                    {
+                        setMenus();
+                    }
+                    else
+                    {
+                        noConnection();
+                    }
+                    //BackgroundColor = Color.White;
                 }
             };
 		}
@@ -87,16 +102,6 @@ namespace SouthernCuisine
             {
                 dayToday = "Sabbath";
             }
-
-            int cafDayStartIndex = fullCafMenu.IndexOf("Menu for " + dayToday);
-            int cafDayEndIndex = fullCafMenu.IndexOf("</div>", cafDayStartIndex);
-            string cafDayMenu = fullCafMenu.Substring(cafDayStartIndex, cafDayEndIndex - cafDayStartIndex);
-
-            int VMDayStartIndex = fullVMMenu.IndexOf("DELI MENU");
-            VMDayStartIndex = fullVMMenu.IndexOf(dayToday, VMDayStartIndex);
-            int VMDayEndIndex = fullVMMenu.IndexOf("</div>", VMDayStartIndex);
-            string VMDayMenu = fullVMMenu.Substring(VMDayStartIndex, VMDayEndIndex - VMDayStartIndex);
-            VMDayMenu = VMDayMenu.Replace('\n', ' ');
 
             string cafMeal = "Breakfast";
             string cafTimes = " 6:30 - 10 a.m.";
@@ -124,7 +129,14 @@ namespace SouthernCuisine
 
             if (hour < 9 || (hour == 9 && minutes < 30))
             {
-                VMMeal = "Breakfast";
+                if (dayToday == "Sunday")
+                {
+                    VMMeal = "g>Deli";
+                }
+                else
+                {
+                    VMMeal = "Breakfast";
+                }
             }
             else if (hour < 13 || (hour == 13 && minutes < 30)) 
             {
@@ -136,6 +148,23 @@ namespace SouthernCuisine
                 VMMeal = "Supper";
                 VMTimes = " 5 a.m. - 7:30 p.m.";
             }
+
+            //START TestButton Function
+            /*if (TestingButton.IsToggled)
+            {
+                VMMeal = "Lunch";
+            }*/
+            //END TestButton Function
+
+            int cafDayStartIndex = fullCafMenu.IndexOf("Menu for " + dayToday);
+            int cafDayEndIndex = fullCafMenu.IndexOf("</div>", cafDayStartIndex);
+            string cafDayMenu = fullCafMenu.Substring(cafDayStartIndex, cafDayEndIndex - cafDayStartIndex);
+
+            int VMDayStartIndex = fullVMMenu.IndexOf("DELI MENU");
+            VMDayStartIndex = fullVMMenu.IndexOf(dayToday, VMDayStartIndex);
+            int VMDayEndIndex = fullVMMenu.IndexOf("</div>", VMDayStartIndex);
+            string VMDayMenu = fullVMMenu.Substring(VMDayStartIndex, VMDayEndIndex - VMDayStartIndex);
+            VMDayMenu = VMDayMenu.Replace('\n', ' ');
 
             string displayCafMenu = "";
             int cafMealStartIndex = 0;
@@ -163,19 +192,44 @@ namespace SouthernCuisine
                 displayCafMenu = "No food served here for this meal today";
             }
 
+            CurrentCafMealLabel.Text = cafMeal + " at the Cafeteria" + '\n' + cafTimes;
+            CurrentCafLabel.Text = displayCafMenu;
+
+            if (dayToday == "Sabbath")
+            {
+                CurrentVMMealLabel.Text = "Village Market";
+                CurrentVMLabel.Text = "No food served here today";
+                return;
+            }
+
             if (VMDayMenu.IndexOf(VMMeal) != -1)
             {
                 VMMealStartIndex = VMDayMenu.IndexOf(VMMeal);
                 if (VMDayMenu.IndexOf("m<", VMMealStartIndex) < 0)
                 {
-                    VMMealStartIndex = VMDayMenu.IndexOf("NO SUPPER", VMMealStartIndex);
+                    if (VMMeal == "g>Deli")
+                    {
+                        VMMealStartIndex = VMDayMenu.IndexOf("Hot Deck", VMMealStartIndex);
+                        VMMeal = "Deli";
+                    }
+                    else
+                    {
+                        VMMealStartIndex = VMDayMenu.IndexOf("NO SUPPER", VMMealStartIndex);
+                    }
                 }
                 else
                 {
                     VMMealStartIndex = VMDayMenu.IndexOf("m<", VMMealStartIndex) + 1;
                 }
                 VMMealStartIndex = findEndOfHTMLTags(VMDayMenu, VMMealStartIndex);
-                VMMealEndIndex = VMDayMenu.IndexOf("</ul>", VMMealStartIndex);
+                if (VMMeal == "Lunch")
+                {
+                    VMMealEndIndex = VMDayMenu.IndexOf("SOUP", VMMealStartIndex);
+                }
+                else
+                {
+                    VMMealEndIndex = VMDayMenu.IndexOf("</ul>", VMMealStartIndex);
+                }
 
                 displayVMMenu = VMDayMenu.Substring(VMMealStartIndex, VMMealEndIndex - VMMealStartIndex) + '\n';
 
@@ -192,10 +246,9 @@ namespace SouthernCuisine
                 displayVMMenu = "No food served here for this meal today";
             }
 
-            currentCafMealLabel.Text = cafMeal + " at the Cafeteria" + '\n' + cafTimes;
-            currentCafLabel.Text = displayCafMenu;
-            currentVMMealLabel.Text = VMMeal + " at the Village Market" + '\n' + VMTimes;
-            currentVMLabel.Text = displayVMMenu;
+            
+            CurrentVMMealLabel.Text = VMMeal + " at the Village Market" + '\n' + VMTimes;
+            CurrentVMLabel.Text = displayVMMenu;
         }
 
         public int findEndOfHTMLTags(string menu, int startIndex)
@@ -233,10 +286,17 @@ namespace SouthernCuisine
 
         public void clearLabels()
         {
-            currentCafLabel.Text = "";
-            currentCafMealLabel.Text = "";
-            currentVMLabel.Text = "";
-            currentVMMealLabel.Text = "";
+            CurrentCafLabel.Text = "";
+            CurrentCafMealLabel.Text = "";
+            CurrentVMLabel.Text = "";
+            CurrentVMMealLabel.Text = "";
+        }
+
+        public void noConnection()
+        {
+            clearLabels();
+            CurrentCafLabel.Text = "Network connection not detected";
+            CurrentCafMealLabel.Text = "Please check your Internet connection";
         }
     }
 }
