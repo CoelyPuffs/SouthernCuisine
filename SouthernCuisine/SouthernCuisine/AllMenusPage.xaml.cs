@@ -721,7 +721,19 @@ namespace SouthernCuisine
             {
                 BreakfastLabel.IsVisible = true;
                 BreakfastMenuLabel.IsVisible = true;
-                BreakfastLabel.Text = meal + " at the Village Market \n 7:00 a.m. - 9:30 a.m.";
+                string breakfastTime = "";
+                var test = dayMenu.Substring(dayMenu.IndexOf(meal));
+                var VMBreakfastTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:apm\s\.]*<");
+                if (VMBreakfastTimeMatch.Success)
+                {
+                    breakfastTime = dayMenu.Substring(dayMenu.IndexOf(meal) + VMBreakfastTimeMatch.Index, VMBreakfastTimeMatch.Length - 1);
+                }
+                string breakfastLabelText = "Breakfast at the Village Market";
+                if (breakfastTime != "")
+                {
+                    breakfastLabelText += '\n' + breakfastTime;
+                }
+                BreakfastLabel.Text = breakfastLabelText;
                 BreakfastMenuLabel.Text = displayMenu;
             }
             else
@@ -752,7 +764,18 @@ namespace SouthernCuisine
             {
                 LunchLabel.IsVisible = true;
                 LunchMenuLabel.IsVisible = true;
-                LunchLabel.Text = "Lunch at the Village Market \n 11 a.m. - 1:30 p.m.";
+                string lunchTime = "";
+                var VMLunchTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:apm\s\.]*<");
+                if (VMLunchTimeMatch.Success)
+                {
+                    lunchTime = dayMenu.Substring(dayMenu.IndexOf(meal) + VMLunchTimeMatch.Index, VMLunchTimeMatch.Length - 1);
+                }
+                string lunchLabelText = "Lunch at the Village Market";
+                if (lunchTime != "")
+                {
+                    lunchLabelText += '\n' + lunchTime;
+                }
+                LunchLabel.Text = lunchLabelText;
                 LunchMenuLabel.Text = displayMenu;
             }
             else
@@ -783,7 +806,18 @@ namespace SouthernCuisine
             {
                 OtherLabel.IsVisible = true;
                 OtherMenuLabel.IsVisible = true;
-                OtherLabel.Text = "Soup at the Village Market";
+                string otherTime = "";
+                var VMOtherTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:apm\s\.]*<");
+                if (VMOtherTimeMatch.Success)
+                {
+                    otherTime = dayMenu.Substring(dayMenu.IndexOf(meal) + VMOtherTimeMatch.Index, VMOtherTimeMatch.Length - 1);
+                }
+                string otherLabelText = "Soup at the Village Market";
+                if (otherTime != "")
+                {
+                    otherLabelText += '\n' + otherTime;
+                }
+                OtherLabel.Text = otherLabelText;
                 OtherMenuLabel.Text = displayMenu;
             }
             else
@@ -821,7 +855,18 @@ namespace SouthernCuisine
             {
                 SupperLabel.IsVisible = true;
                 SupperMenuLabel.IsVisible = true;
-                SupperLabel.Text = "Supper at the Village Market \n 5 a.m. - 7:30 p.m.";
+                string supperTime = "";
+                var VMSupperTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:apm\s\.]*<");
+                if (VMSupperTimeMatch.Success)
+                {
+                    supperTime = dayMenu.Substring(dayMenu.IndexOf(meal) + VMSupperTimeMatch.Index, VMSupperTimeMatch.Length - 1);
+                }
+                string supperLabelText = "Supper at the Village Market";
+                if (supperTime != "")
+                {
+                    supperLabelText += '\n' + supperTime;
+                }
+                SupperLabel.Text = supperLabelText;
                 SupperMenuLabel.Text = displayMenu;
             }
             else

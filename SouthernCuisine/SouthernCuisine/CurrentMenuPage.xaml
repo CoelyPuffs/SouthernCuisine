@@ -15,6 +15,7 @@
                 VerticalOptions="Start"
                 HorizontalOptions="Center"
                 Font="Bold, 20"
+                HorizontalTextAlignment="Center"
                 BackgroundColor="Transparent"/>
                 <Label 
                 x:Name="CurrentCafLabel"
@@ -30,6 +31,7 @@
                 VerticalOptions="Start"
                 HorizontalOptions="Center"
                 Font="Bold, 20"
+                HorizontalTextAlignment="Center"
                 BackgroundColor="Transparent"/>
                 <Label
                 x:Name="CurrentVMLabel"

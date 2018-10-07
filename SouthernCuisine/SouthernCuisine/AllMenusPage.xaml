@@ -129,6 +129,7 @@
                         VerticalOptions="Start"
                         HorizontalOptions="Center"
                         Font="Bold, 20"
+                        HorizontalTextAlignment="Center"
                         BackgroundColor="Transparent"/>
                     <Label
                         x:Name="BreakfastMenuLabel"
@@ -142,6 +143,7 @@
                         VerticalOptions="Start"
                         HorizontalOptions="Center"
                         Font="Bold, 20"
+                        HorizontalTextAlignment="Center"
                         BackgroundColor="Transparent"/>
                     <Label
                         x:Name="LunchMenuLabel"
@@ -155,6 +157,7 @@
                         VerticalOptions="Start"
                         HorizontalOptions="Center"
                         Font="Bold, 20"
+                        HorizontalTextAlignment="Center"
                         BackgroundColor="Transparent"/>
                     <Label
                         x:Name="OtherMenuLabel"
@@ -168,6 +171,7 @@
                         VerticalOptions="Start"
                         HorizontalOptions="Center"
                         Font="Bold, 20"
+                        HorizontalTextAlignment="Center"
                         BackgroundColor="Transparent"/>
                     <Label
                         x:Name="SupperMenuLabel"
