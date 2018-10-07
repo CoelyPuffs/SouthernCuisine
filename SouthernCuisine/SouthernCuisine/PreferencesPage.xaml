@@ -22,9 +22,10 @@
                 Toggled="DayNightSwitch_Toggled"/>
             </StackLayout>
             <Label 
-                x:Name="testLabel"
-                Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand"
+                x:Name="AboutLabel"
+                Text="App created by Kerstan Thio (coelypuffs) using Xamarin Forms. &#10;Icon designed by Adam van Iderstein"
+                TextColor="Gray"
+                VerticalOptions="EndAndExpand"
                 HorizontalOptions="CenterAndExpand"
                 BackgroundColor="Transparent"/>
         </StackLayout>

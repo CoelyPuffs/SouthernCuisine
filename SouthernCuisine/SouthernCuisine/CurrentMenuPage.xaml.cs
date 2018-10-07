@@ -127,16 +127,13 @@ namespace SouthernCuisine
                 dayToday = incrementDay(dayToday);
             }
 
-            if (hour < 9 || (hour == 9 && minutes < 30))
+            if (((hour < 9 || (hour == 9 && minutes < 30)) || (hour > 20 || (hour == 19 && minutes > 30))) && dayToday == "Sunday")
             {
-                if (dayToday == "Sunday")
-                {
-                    VMMeal = "g>Deli";
-                }
-                else
-                {
-                    VMMeal = "Breakfast";
-                }
+                VMMeal = "g>Deli";
+            }
+            else if (hour < 9 || (hour == 9 && minutes < 30))
+            {
+                VMMeal = "Breakfast";
             }
             else if (hour < 13 || (hour == 13 && minutes < 30)) 
             {
@@ -205,14 +202,10 @@ namespace SouthernCuisine
             if (VMDayMenu.IndexOf(VMMeal) != -1)
             {
                 VMMealStartIndex = VMDayMenu.IndexOf(VMMeal);
+                var test = VMDayMenu.IndexOf("m<", VMMealStartIndex);
                 if (VMDayMenu.IndexOf("m<", VMMealStartIndex) < 0)
                 {
-                    if (VMMeal == "g>Deli")
-                    {
-                        VMMealStartIndex = VMDayMenu.IndexOf("Hot Deck", VMMealStartIndex);
-                        VMMeal = "Deli";
-                    }
-                    else
+                    if (VMMeal == "Supper")
                     {
                         VMMealStartIndex = VMDayMenu.IndexOf("NO SUPPER", VMMealStartIndex);
                     }
@@ -220,6 +213,11 @@ namespace SouthernCuisine
                 else
                 {
                     VMMealStartIndex = VMDayMenu.IndexOf("m<", VMMealStartIndex) + 1;
+                    if (VMMeal == "g>Deli")
+                    {
+                        VMMealStartIndex = VMDayMenu.IndexOf("Hot Deck", VMMealStartIndex);
+                        VMMeal = "Deli";
+                    }
                 }
                 VMMealStartIndex = findEndOfHTMLTags(VMDayMenu, VMMealStartIndex);
                 if (VMMeal == "Lunch")
