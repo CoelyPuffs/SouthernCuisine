@@ -27,11 +27,12 @@ namespace SouthernCuisine
                 CurrentCafLabel.TextColor = Color.White;
                 CurrentVMMealLabel.TextColor = Color.White;
                 CurrentVMLabel.TextColor = Color.White;
-                if (CrossConnectivity.Current.IsConnected)
+                //if (CrossConnectivity.Current.IsConnected)
+                try
                 {
                     setMenus();
                 }
-                else
+                catch
                 {
                     noConnection();
                 }
@@ -42,11 +43,12 @@ namespace SouthernCuisine
                 CurrentCafLabel.TextColor = Color.Black;
                 CurrentVMMealLabel.TextColor = Color.Black;
                 CurrentVMLabel.TextColor = Color.Black;
-                if (CrossConnectivity.Current.IsConnected)
+                //if (CrossConnectivity.Current.IsConnected)
+                try
                 {
                     setMenus();
                 }
-                else
+                catch
                 {
                     noConnection();
                 }
@@ -104,9 +106,9 @@ namespace SouthernCuisine
             }
 
             string cafMeal = "Breakfast";
-            string cafTimes = " 6:30 - 10 a.m.";
+            string cafTimes = ""; //= " 6:30 - 10 a.m.";
             string VMMeal = "Breakfast";
-            string VMTimes = " 7:00 a.m. - 9:30 a.m.";
+            string VMTimes = ""; //= " 7:00 a.m. - 9:30 a.m.";
 
             if (hour < 10)
             {
@@ -115,12 +117,12 @@ namespace SouthernCuisine
             else if (hour < 14 || (hour == 14 && minutes < 30))
             {
                 cafMeal = "Lunch";
-                cafTimes = " 11:30 - 2:30 p.m.";
+                //cafTimes = " 11:30 - 2:30 p.m.";
             }
             else if (hour < 18 || (hour == 18 && minutes < 30))
             {
                 cafMeal = "Supper";
-                cafTimes = " 5 - 6:30 p.m.";
+                //cafTimes = " 5 - 6:30 p.m.";
             }
             else
             {
@@ -138,12 +140,12 @@ namespace SouthernCuisine
             else if (hour < 13 || (hour == 13 && minutes < 30)) 
             {
                 VMMeal = "Lunch";
-                VMTimes = " 11 a.m. - 1:30 p.m.";
+                //VMTimes = " 11 a.m. - 1:30 p.m.";
             }
             else if (hour < 19 || (hour == 19 && minutes < 30))
             {
                 VMMeal = "Supper";
-                VMTimes = " 5 a.m. - 7:30 p.m.";
+                //VMTimes = " 5 a.m. - 7:30 p.m.";
             }
 
             //START TestButton Function
@@ -173,6 +175,11 @@ namespace SouthernCuisine
             if (cafDayMenu.IndexOf(cafMeal) != -1)
             {
                 cafMealStartIndex = cafDayMenu.IndexOf(cafMeal);
+                var cafTimeMatch = Regex.Match(cafDayMenu.Substring(cafDayMenu.IndexOf(cafMeal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:apm\s\.]*<");
+                if (cafTimeMatch.Success)
+                {
+                    cafTimes = cafDayMenu.Substring(cafDayMenu.IndexOf(cafMeal) + cafTimeMatch.Index, cafTimeMatch.Length - 1);
+                }
                 cafMealStartIndex = cafDayMenu.IndexOf("m.<", cafMealStartIndex) + 2;
                 cafMealStartIndex = findEndOfHTMLTags(cafDayMenu, cafMealStartIndex);
                 cafMealEndIndex = cafDayMenu.IndexOf("</p>", cafMealStartIndex);
@@ -188,8 +195,12 @@ namespace SouthernCuisine
             {
                 displayCafMenu = "No food served here for this meal today";
             }
-
-            CurrentCafMealLabel.Text = cafMeal + " at the Cafeteria" + '\n' + cafTimes;
+            string cafLabelText = cafMeal + " at the Cafeteria";
+            if (cafTimes != "")
+            {
+                cafLabelText += '\n' + cafTimes;
+            }
+            CurrentCafMealLabel.Text = cafLabelText;
             CurrentCafLabel.Text = displayCafMenu;
 
             if (dayToday == "Sabbath")
@@ -202,7 +213,12 @@ namespace SouthernCuisine
             if (VMDayMenu.IndexOf(VMMeal) != -1)
             {
                 VMMealStartIndex = VMDayMenu.IndexOf(VMMeal);
-                var test = VMDayMenu.IndexOf("m<", VMMealStartIndex);
+                var VMTimeMatch = Regex.Match(VMDayMenu.Substring(VMDayMenu.IndexOf(VMMeal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:apm\s\.]*<");
+                if (VMTimeMatch.Success)
+                {
+                    VMTimes = VMDayMenu.Substring(VMDayMenu.IndexOf(VMMeal) + VMTimeMatch.Index, VMTimeMatch.Length - 1);
+                }
+                //var test = VMDayMenu.IndexOf("m<", VMMealStartIndex);
                 if (VMDayMenu.IndexOf("m<", VMMealStartIndex) < 0)
                 {
                     if (VMMeal == "Supper")
@@ -215,7 +231,7 @@ namespace SouthernCuisine
                     VMMealStartIndex = VMDayMenu.IndexOf("m<", VMMealStartIndex) + 1;
                     if (VMMeal == "g>Deli")
                     {
-                        VMMealStartIndex = VMDayMenu.IndexOf("Hot Deck", VMMealStartIndex);
+                        VMMealStartIndex = VMDayMenu.IndexOf("Hot Deck", VMMealStartIndex) + 8;
                         VMMeal = "Deli";
                     }
                 }
@@ -244,8 +260,12 @@ namespace SouthernCuisine
                 displayVMMenu = "No food served here for this meal today";
             }
 
-            
-            CurrentVMMealLabel.Text = VMMeal + " at the Village Market" + '\n' + VMTimes;
+            string VMLabelText = VMMeal + " at the Village Market";
+            if (VMTimes != "")
+            {
+                VMLabelText += '\n' + VMTimes;
+            }
+            CurrentVMMealLabel.Text = VMLabelText;
             CurrentVMLabel.Text = displayVMMenu;
         }
 
