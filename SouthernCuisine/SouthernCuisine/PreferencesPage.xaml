@@ -12,7 +12,7 @@
                 Orientation="Horizontal">
                 <Label
                     x:Name="nightSwitchLabel"
-                    Text="Night Mode (Experimental)"
+                    Text="Night Mode"
                     Font="20"
                     HorizontalOptions="StartAndExpand"
                     BackgroundColor="Transparent"/>
@@ -21,6 +21,16 @@
                     HorizontalOptions="EndAndExpand"
                 Toggled="DayNightSwitch_Toggled"/>
             </StackLayout>
+            <Label
+                x:Name="PatchNotesLabel"
+                Text="Patch Notes v0.3:
+                        &#10;Fixed a bug where the VM serving soup caused the app to crash.
+                        &#10;Fixed a bug causing the app to crash if disconnected from the Internet while loading.
+                        &#10;Lumped soup into the VM's lunch menu.
+                        &#10;Added salad times to the VM menu
+                        &#10;Slightly decreased load time"
+                TextColor="Gray"
+                BackgroundColor="Transparent"/>
             <Label 
                 x:Name="AboutLabel"
                 Text="App created by Kerstan Thio (coelypuffs) using Xamarin Forms. &#10;Icon designed by Adam van Iderstein"

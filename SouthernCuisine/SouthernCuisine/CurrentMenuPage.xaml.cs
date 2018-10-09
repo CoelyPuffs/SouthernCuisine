@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using Plugin.Connectivity;
+//using Plugin.Connectivity;
 
 namespace SouthernCuisine
 {
@@ -63,11 +63,13 @@ namespace SouthernCuisine
                     CurrentCafLabel.TextColor = Color.White;
                     CurrentVMMealLabel.TextColor = Color.White;
                     CurrentVMLabel.TextColor = Color.White;
-                    if (CrossConnectivity.Current.IsConnected)
+                    //if (CrossConnectivity.Current.IsConnected)
+                    try
                     {
                         setMenus();
                     }
-                    else
+                    //else
+                    catch
                     {
                         noConnection();
                     }
@@ -78,11 +80,13 @@ namespace SouthernCuisine
                     CurrentCafLabel.TextColor = Color.Black;
                     CurrentVMMealLabel.TextColor = Color.Black;
                     CurrentVMLabel.TextColor = Color.Black;
-                    if (CrossConnectivity.Current.IsConnected)
+                    //if (CrossConnectivity.Current.IsConnected)
+                    try
                     {
                         setMenus();
                     }
-                    else
+                    //else
+                    catch
                     {
                         noConnection();
                     }
@@ -236,14 +240,14 @@ namespace SouthernCuisine
                     }
                 }
                 VMMealStartIndex = findEndOfHTMLTags(VMDayMenu, VMMealStartIndex);
-                if (VMMeal == "Lunch")
+                /*if (VMMeal == "Lunch")
                 {
                     VMMealEndIndex = VMDayMenu.IndexOf("SOUP", VMMealStartIndex);
                 }
                 else
-                {
+                {*/
                     VMMealEndIndex = VMDayMenu.IndexOf("</ul>", VMMealStartIndex);
-                }
+                /*}*/
 
                 displayVMMenu = VMDayMenu.Substring(VMMealStartIndex, VMMealEndIndex - VMMealStartIndex) + '\n';
 

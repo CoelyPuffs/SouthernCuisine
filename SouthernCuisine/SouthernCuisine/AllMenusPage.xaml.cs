@@ -9,7 +9,7 @@ using System.Text.RegularExpressions;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-using Plugin.Connectivity;
+//using Plugin.Connectivity;
 
 namespace SouthernCuisine
 {
@@ -32,11 +32,13 @@ namespace SouthernCuisine
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-            if (CrossConnectivity.Current.IsConnected)
+            //if (CrossConnectivity.Current.IsConnected)
+            try
             {
                 getCafMenu(daySelected);
             }
-            else
+            //else
+            catch
             {
                 noConnection();
             }
@@ -146,11 +148,13 @@ namespace SouthernCuisine
                 VMMenuButton.TextColor = Color.Black;
             }
 
-            if (CrossConnectivity.Current.IsConnected)
+            //if (CrossConnectivity.Current.IsConnected)
+            try
             {
                 getCafMenu(daySelected);
             }
-            else
+            //else
+            catch
             {
                 noConnection();
             }
@@ -170,11 +174,13 @@ namespace SouthernCuisine
                 CafMenuButton.TextColor = Color.Black;
             }
             
-            if (CrossConnectivity.Current.IsConnected)
+            //if (CrossConnectivity.Current.IsConnected)
+            try
             {
                 getVMMenu(daySelected);
             }
-            else
+            //else
+            catch
             {
                 noConnection();
             }
@@ -204,7 +210,8 @@ namespace SouthernCuisine
                 SaturdayButton.TextColor = Color.Black;
             }
 
-            if (CrossConnectivity.Current.IsConnected)
+            //if (CrossConnectivity.Current.IsConnected)
+            try
             {
                 if (venueSelected == "Village Market")
                 {
@@ -215,7 +222,8 @@ namespace SouthernCuisine
                     getCafMenu("Sunday");
                 }
             }
-            else
+            //else
+            catch
             {
                 noConnection();
             }
@@ -245,7 +253,8 @@ namespace SouthernCuisine
                 SaturdayButton.TextColor = Color.Black;
             }
 
-            if (CrossConnectivity.Current.IsConnected)
+            //if (CrossConnectivity.Current.IsConnected)
+            try
             {
                 if (venueSelected == "Village Market")
                 {
@@ -256,7 +265,8 @@ namespace SouthernCuisine
                     getCafMenu("Monday");
                 }
             }
-            else
+            //else
+            catch
             {
                 noConnection();
             }
@@ -286,7 +296,8 @@ namespace SouthernCuisine
                 SaturdayButton.TextColor = Color.Black;
             }
 
-            if (CrossConnectivity.Current.IsConnected)
+            //if (CrossConnectivity.Current.IsConnected)
+            try
             {
                 if (venueSelected == "Village Market")
                 {
@@ -297,7 +308,8 @@ namespace SouthernCuisine
                     getCafMenu("Tuesday");
                 }
             }
-            else
+            //else
+            catch
             {
                 noConnection();
             }
@@ -327,7 +339,8 @@ namespace SouthernCuisine
                 SaturdayButton.TextColor = Color.Black;
             }
 
-            if (CrossConnectivity.Current.IsConnected)
+            //if (CrossConnectivity.Current.IsConnected)
+            try
             {
                 if (venueSelected == "Village Market")
                 {
@@ -338,7 +351,8 @@ namespace SouthernCuisine
                     getCafMenu("Wednesday");
                 }
             }
-            else
+            //else
+            catch
             {
                 noConnection();
             }
@@ -368,7 +382,8 @@ namespace SouthernCuisine
                 SaturdayButton.TextColor = Color.Black;
             }
 
-            if (CrossConnectivity.Current.IsConnected)
+            //if (CrossConnectivity.Current.IsConnected)
+            try
             {
                 if (venueSelected == "Village Market")
                 {
@@ -379,7 +394,8 @@ namespace SouthernCuisine
                     getCafMenu("Thursday");
                 }
             }
-            else
+            //else
+            catch
             {
                 noConnection();
             }
@@ -409,7 +425,8 @@ namespace SouthernCuisine
                 SaturdayButton.TextColor = Color.Black;
             }
 
-            if (CrossConnectivity.Current.IsConnected)
+            //if (CrossConnectivity.Current.IsConnected)
+            try
             {
                 if (venueSelected == "Village Market")
                 {
@@ -420,7 +437,8 @@ namespace SouthernCuisine
                     getCafMenu("Friday");
                 }
             }
-            else
+            //else
+            catch
             {
                 noConnection();
             }
@@ -450,7 +468,8 @@ namespace SouthernCuisine
                 FridayButton.TextColor = Color.Black;
             }
 
-            if (CrossConnectivity.Current.IsConnected)
+            //if (CrossConnectivity.Current.IsConnected)
+            try
             {
                 if (venueSelected == "Village Market")
                 {
@@ -461,7 +480,8 @@ namespace SouthernCuisine
                     getCafMenu("Saturday");
                 }
             }
-            else
+            //else
+            catch
             {
                 noConnection();
             }
@@ -749,7 +769,7 @@ namespace SouthernCuisine
                 mealStartIndex = dayMenu.IndexOf(meal);
                 mealStartIndex = dayMenu.IndexOf("m<", mealStartIndex) + 1;
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
-                mealEndIndex = dayMenu.IndexOf("SOUP", mealStartIndex);
+                mealEndIndex = dayMenu.IndexOf("</ul>", mealStartIndex);
 
                 displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
                 displayMenu = displayMenu.Replace("&amp;", "&");
@@ -757,6 +777,7 @@ namespace SouthernCuisine
                 displayMenu = displayMenu.Replace("<br>", "\n");
                 displayMenu = displayMenu.Replace("</li>", "\n");
                 displayMenu = Regex.Replace(displayMenu, @"[^\S\n]{2,}", "");
+                displayMenu = Regex.Replace(displayMenu, @"\n{2,}", "\n");
                 displayMenu = Regex.Replace(displayMenu, @"<[^<>]*>", "");
                 displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
             }
@@ -784,35 +805,20 @@ namespace SouthernCuisine
                 LunchMenuLabel.IsVisible = false;
             }
 
-            meal = "SOUP";
+            meal = "Salad Bar";
             displayMenu = "";
             if (dayMenu.IndexOf(meal) != -1)
             {
-                mealStartIndex = dayMenu.IndexOf(meal) + 4;
-                //mealStartIndex = dayMenu.IndexOf("m<", mealStartIndex) + 1;
-                mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
-                mealEndIndex = dayMenu.IndexOf("</li>", mealStartIndex);
+                mealStartIndex = dayMenu.IndexOf(meal) + 9;
 
-                displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
-                displayMenu = displayMenu.Replace("&amp;", "&");
-                displayMenu = displayMenu.Replace("&nbsp;", " ");
-                displayMenu = displayMenu.Replace("<br>", "\n");
-                displayMenu = displayMenu.Replace("</li>", "\n");
-                displayMenu = Regex.Replace(displayMenu, @"[^\S\n]{2,}", "");
-                displayMenu = Regex.Replace(displayMenu, @"<[^<>]*>", "");
-                displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
-            }
-            if (displayMenu != "")
-            {
                 OtherLabel.IsVisible = true;
-                OtherMenuLabel.IsVisible = true;
                 string otherTime = "";
                 var VMOtherTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:apm\s\.]*<");
                 if (VMOtherTimeMatch.Success)
                 {
                     otherTime = dayMenu.Substring(dayMenu.IndexOf(meal) + VMOtherTimeMatch.Index, VMOtherTimeMatch.Length - 1);
                 }
-                string otherLabelText = "Soup at the Village Market";
+                string otherLabelText = "Salad Bar at the Village Market";
                 if (otherTime != "")
                 {
                     otherLabelText += '\n' + otherTime;
