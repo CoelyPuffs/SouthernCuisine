@@ -162,12 +162,14 @@ namespace SouthernCuisine
             int cafDayStartIndex = fullCafMenu.IndexOf("Menu for " + dayToday);
             int cafDayEndIndex = fullCafMenu.IndexOf("</div>", cafDayStartIndex);
             string cafDayMenu = fullCafMenu.Substring(cafDayStartIndex, cafDayEndIndex - cafDayStartIndex);
+            cafDayMenu = cafDayMenu.Replace("&nbsp;", " ");
 
             int VMDayStartIndex = fullVMMenu.IndexOf("DELI MENU");
             VMDayStartIndex = fullVMMenu.IndexOf(dayToday, VMDayStartIndex);
             int VMDayEndIndex = fullVMMenu.IndexOf("</div>", VMDayStartIndex);
             string VMDayMenu = fullVMMenu.Substring(VMDayStartIndex, VMDayEndIndex - VMDayStartIndex);
             VMDayMenu = VMDayMenu.Replace('\n', ' ');
+            VMDayMenu = VMDayMenu.Replace("&nbsp;", " ");
 
             string displayCafMenu = "";
             int cafMealStartIndex = 0;
@@ -256,6 +258,7 @@ namespace SouthernCuisine
                 displayVMMenu = displayVMMenu.Replace("<br>", "\n");
                 displayVMMenu = displayVMMenu.Replace("</li>", "\n");
                 displayVMMenu = Regex.Replace(displayVMMenu, @"[^\S\n]{2,}", "");
+                displayVMMenu = Regex.Replace(displayVMMenu, @"\n{2,}", "\n");
                 displayVMMenu = Regex.Replace(displayVMMenu, @"<[^<>]*>", "");
                 displayVMMenu = Regex.Replace(displayVMMenu, @"\s+\z", "");
             }

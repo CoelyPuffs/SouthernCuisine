@@ -499,6 +499,7 @@ namespace SouthernCuisine
             int dayStartIndex = fullMenu.IndexOf("Menu for " + dayToday);
             int dayEndIndex = fullMenu.IndexOf("</div>", dayStartIndex);
             string dayMenu = fullMenu.Substring(dayStartIndex, dayEndIndex - dayStartIndex);
+            dayMenu = dayMenu.Replace("&nbsp;", " ");
 
             clearLabels();
 
@@ -694,6 +695,7 @@ namespace SouthernCuisine
             int dayEndIndex = fullMenu.IndexOf("</div>", dayStartIndex);
             string dayMenu = fullMenu.Substring(dayStartIndex, dayEndIndex - dayStartIndex);
             dayMenu = dayMenu.Replace('\n', ' ');
+            dayMenu = dayMenu.Replace("&nbsp;", " ");
 
             clearLabels();
 
@@ -717,6 +719,7 @@ namespace SouthernCuisine
                 displayMenu = displayMenu.Replace("<br>", "\n");
                 displayMenu = displayMenu.Replace("</li>", "\n");
                 displayMenu = Regex.Replace(displayMenu, @"[^\S\n]{2,}", "");
+                displayMenu = Regex.Replace(displayMenu, @"\n{2,}", "\n");
                 displayMenu = Regex.Replace(displayMenu, @"<[^<>]*>", "");
                 displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
             }
@@ -734,6 +737,7 @@ namespace SouthernCuisine
                 displayMenu = displayMenu.Replace("<br>", "\n");
                 displayMenu = displayMenu.Replace("</li>", "\n");
                 displayMenu = Regex.Replace(displayMenu, @"[^\S\n]{2,}", "");
+                displayMenu = Regex.Replace(displayMenu, @"\n{2,}", "\n");
                 displayMenu = Regex.Replace(displayMenu, @"<[^<>]*>", "");
                 displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
             }
@@ -854,6 +858,7 @@ namespace SouthernCuisine
                 displayMenu = displayMenu.Replace("<br>", "\n");
                 displayMenu = displayMenu.Replace("</li>", "\n");
                 displayMenu = Regex.Replace(displayMenu, @"[^\S\n]{2,}", "");
+                displayMenu = Regex.Replace(displayMenu, @"\n{2,}", "\n");
                 displayMenu = Regex.Replace(displayMenu, @"<[^<>]*>", "");
                 displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
             }
