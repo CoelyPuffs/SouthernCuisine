@@ -133,7 +133,7 @@ namespace SouthernCuisine
                 dayToday = incrementDay(dayToday);
             }
 
-            if (((hour < 9 || (hour == 9 && minutes < 30)) || (hour > 20 || (hour == 19 && minutes > 30))) && dayToday == "Sunday")
+            if (((hour < 13) || (hour > 20 || (hour == 19 && minutes > 30))) && dayToday == "Sunday")
             {
                 VMMeal = "g>Deli";
             }
