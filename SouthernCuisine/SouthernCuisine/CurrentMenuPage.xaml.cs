@@ -266,7 +266,9 @@ namespace SouthernCuisine
                 }
                 else
                 {
-                    cafMealStartIndex = cafDayMenu.IndexOf("m.<", cafMealStartIndex) + 2;
+                    cafMealStartIndex = cafDayMenu.IndexOf("<", cafMealStartIndex);
+                    cafMealStartIndex = findEndOfHTMLTags(cafDayMenu, cafMealStartIndex);
+                    cafMealStartIndex = cafDayMenu.IndexOf("<", cafMealStartIndex);
                     cafMealStartIndex = findEndOfHTMLTags(cafDayMenu, cafMealStartIndex);
                     cafMealEndIndex = cafDayMenu.IndexOf("</p>", cafMealStartIndex);
                 }
