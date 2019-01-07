@@ -314,7 +314,7 @@ namespace SouthernCuisine
             if (VMDayMenu.IndexOf(VMMeal) != -1)
             {
                 VMMealStartIndex = VMDayMenu.IndexOf(VMMeal);
-                if (VMDayMenu.IndexOf("m<", VMMealStartIndex) < 0)
+                if (VMDayMenu.IndexOf("m<", VMMealStartIndex) < 0 && VMDayMenu.IndexOf("m <", VMMealStartIndex) < 0)
                 {
                     if (VMMeal == "Supper")
                     {
@@ -323,7 +323,24 @@ namespace SouthernCuisine
                 }
                 else
                 {
-                    VMMealStartIndex = VMDayMenu.IndexOf("m<", VMMealStartIndex) + 1;
+                    int noSpaceIndex = VMDayMenu.IndexOf("m<", VMMealStartIndex);
+                    int spaceIndex = VMDayMenu.IndexOf("m <", VMMealStartIndex);
+                    if  (noSpaceIndex > 0)
+                    {
+                        if (spaceIndex > 0)
+                        {
+                            VMMealStartIndex = Math.Min(VMDayMenu.IndexOf("m<", VMMealStartIndex) + 1, VMDayMenu.IndexOf("m <", VMMealStartIndex) + 2);
+                        }
+                        else
+                        {
+                            VMMealStartIndex = VMMealStartIndex = VMDayMenu.IndexOf("m<", VMMealStartIndex) + 1;
+                        }
+                    }
+                    else
+                    {
+                        VMMealStartIndex = VMDayMenu.IndexOf("m <", VMMealStartIndex) + 2;
+                    }
+                    
                     if (VMMeal == "g>Deli")
                     {
                         VMMealStartIndex = VMDayMenu.IndexOf("Hot Deck", VMMealStartIndex) + 8;
