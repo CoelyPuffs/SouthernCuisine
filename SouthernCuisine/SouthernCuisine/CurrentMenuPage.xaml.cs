@@ -105,6 +105,10 @@ namespace SouthernCuisine
             WebClient client = new WebClient();
             DateTime today = DateTime.Now;
             int hour = today.Hour;
+
+            // For testing purposes
+            //hour = 12;
+
             int minutes = today.Minute;
             string dayToday = today.DayOfWeek.ToString();
 
@@ -154,7 +158,7 @@ namespace SouthernCuisine
             string cafDayMenu = fullCafMenu.Substring(cafDayStartIndex, cafDayEndIndex - cafDayStartIndex);
             cafDayMenu = cafDayMenu.Replace("&nbsp;", " ");
 
-            var cafTimeMatch = Regex.Matches(cafDayMenu, @">\s*[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.)");
+            var cafTimeMatch = Regex.Matches(cafDayMenu, @">\s*[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.|a\.m|p\.m)");
 
             List<List<string>> mealNamesTimes = new List<List<string>>();
 
@@ -201,7 +205,7 @@ namespace SouthernCuisine
             VMDayMenu = VMDayMenu.Replace('\n', ' ');
             VMDayMenu = VMDayMenu.Replace("&nbsp;", " ");
 
-            var VMTimeMatch = Regex.Matches(VMDayMenu, @"\s[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.)");
+            var VMTimeMatch = Regex.Matches(VMDayMenu, @"\s[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.|a\.m|p\.m)");
             // ^ error here
 
             List<List<string>> mealNamesTimes = new List<List<string>>();
@@ -397,7 +401,7 @@ namespace SouthernCuisine
                 {
                     timeIndex++;
                 }
-                if (timeRange.Substring(timeIndex) == "pm" || timeRange.Substring(timeIndex) == "p.m.")
+                if (timeRange.Substring(timeIndex) == "pm" || timeRange.Substring(timeIndex) == "p.m." || timeRange.Substring(timeIndex) == "p.m") 
                 {
                     endHour += 12;
                 }

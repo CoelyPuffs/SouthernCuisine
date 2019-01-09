@@ -531,7 +531,7 @@ namespace SouthernCuisine
                 BreakfastMenuLabel.IsVisible = true;
                 string breakfastTime = "";
                 var test = dayMenu.Substring(dayMenu.IndexOf(meal));
-                var cafBreakfastTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.)");
+                var cafBreakfastTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.|a\.m|p\.m)");
                 if (cafBreakfastTimeMatch.Success)
                 {
                     breakfastTime = dayMenu.Substring(dayMenu.IndexOf(meal) + cafBreakfastTimeMatch.Index, cafBreakfastTimeMatch.Length);
@@ -573,7 +573,7 @@ namespace SouthernCuisine
                 LunchLabel.IsVisible = true;
                 LunchMenuLabel.IsVisible = true;
                 string lunchTime = "";
-                var cafLunchTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.)");
+                var cafLunchTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.|a\.m|p\.m)");
                 if (cafLunchTimeMatch.Success)
                 {
                     lunchTime = dayMenu.Substring(dayMenu.IndexOf(meal) + cafLunchTimeMatch.Index, cafLunchTimeMatch.Length);
@@ -613,7 +613,7 @@ namespace SouthernCuisine
                 OtherLabel.IsVisible = true;
                 OtherMenuLabel.IsVisible = true;
                 string otherTime = "";
-                var cafOtherTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.)");
+                var cafOtherTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.|a\.m|p\.m)");
                 if (cafOtherTimeMatch.Success)
                 {
                     otherTime = dayMenu.Substring(dayMenu.IndexOf(meal) + cafOtherTimeMatch.Index, cafOtherTimeMatch.Length);
@@ -664,7 +664,7 @@ namespace SouthernCuisine
                 SupperLabel.IsVisible = true;
                 SupperMenuLabel.IsVisible = true;
                 string supperTime = "";
-                var cafSupperTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.)");
+                var cafSupperTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.|a\.m|p\.m)");
                 if (cafSupperTimeMatch.Success)
                 {
                     supperTime = dayMenu.Substring(dayMenu.IndexOf(meal) + cafSupperTimeMatch.Index, cafSupperTimeMatch.Length);
@@ -778,7 +778,7 @@ namespace SouthernCuisine
                 BreakfastMenuLabel.IsVisible = true;
                 string breakfastTime = "";
                 var test = dayMenu.Substring(dayMenu.IndexOf(meal));
-                var VMBreakfastTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.)");
+                var VMBreakfastTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.|a\.m|p\.m)");
                 if (VMBreakfastTimeMatch.Success)
                 {
                     breakfastTime = dayMenu.Substring(dayMenu.IndexOf(meal) + VMBreakfastTimeMatch.Index, VMBreakfastTimeMatch.Length);
@@ -837,7 +837,7 @@ namespace SouthernCuisine
                 LunchLabel.IsVisible = true;
                 LunchMenuLabel.IsVisible = true;
                 string lunchTime = "";
-                var VMLunchTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.)");
+                var VMLunchTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.|a\.m|p\.m)");
                 if (VMLunchTimeMatch.Success)
                 {
                     lunchTime = dayMenu.Substring(dayMenu.IndexOf(meal) + VMLunchTimeMatch.Index, VMLunchTimeMatch.Length);
@@ -864,7 +864,7 @@ namespace SouthernCuisine
 
                 OtherLabel.IsVisible = true;
                 string otherTime = "";
-                var VMOtherTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.)");
+                var VMOtherTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.|a\.m|p\.m)");
                 if (VMOtherTimeMatch.Success)
                 {
                     otherTime = dayMenu.Substring(dayMenu.IndexOf(meal) + VMOtherTimeMatch.Index, VMOtherTimeMatch.Length);
@@ -930,7 +930,7 @@ namespace SouthernCuisine
                 SupperLabel.IsVisible = true;
                 SupperMenuLabel.IsVisible = true;
                 string supperTime = "";
-                var VMSupperTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.)");
+                var VMSupperTimeMatch = Regex.Match(dayMenu.Substring(dayMenu.IndexOf(meal)), @"[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.|a\.m|p\.m)");
                 if (VMSupperTimeMatch.Success)
                 {
                     supperTime = dayMenu.Substring(dayMenu.IndexOf(meal) + VMSupperTimeMatch.Index, VMSupperTimeMatch.Length);
