@@ -107,7 +107,7 @@ namespace SouthernCuisine
             int hour = today.Hour;
 
             // For testing purposes
-            //hour = 12;
+            // hour = 10;
 
             int minutes = today.Minute;
             string dayToday = today.DayOfWeek.ToString();
@@ -423,7 +423,7 @@ namespace SouthernCuisine
                 {
                     timeIndex++;
                 }
-                if (timeRange.Substring(timeIndex) == "pm" || timeRange.Substring(timeIndex) == "p.m.")
+                if (timeRange.Substring(timeIndex) == "pm" || timeRange.Substring(timeIndex) == "p.m." || timeRange.Substring(timeIndex) == "p.m")
                 {
                     endHour += 12;
                 }
