@@ -517,6 +517,16 @@ namespace SouthernCuisine
                 mealStartIndex = dayMenu.IndexOf("<", mealStartIndex);
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
                 mealEndIndex = dayMenu.IndexOf("</p>", mealStartIndex);
+                int grabNGoIndex = dayMenu.IndexOf("Grab n Go", mealStartIndex);
+                int lunchIndex = dayMenu.IndexOf("Lunch", mealStartIndex);
+                if (grabNGoIndex < mealEndIndex && grabNGoIndex > 0)
+                {
+                    mealEndIndex = grabNGoIndex;
+                }
+                else if(lunchIndex < mealEndIndex && lunchIndex > 0)
+                {
+                    mealEndIndex = lunchIndex;
+                }
 
                 displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
 
@@ -560,6 +570,16 @@ namespace SouthernCuisine
                 mealStartIndex = dayMenu.IndexOf("<", mealStartIndex);
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
                 mealEndIndex = dayMenu.IndexOf("</p>", mealStartIndex);
+                int internationalBarIndex = dayMenu.IndexOf("International Bar", mealStartIndex);
+                int grabNGoIndex = dayMenu.IndexOf("Grab n Go", mealStartIndex);               
+                if (internationalBarIndex < mealEndIndex && internationalBarIndex > 0)
+                {
+                    mealEndIndex = internationalBarIndex;
+                }
+                else if (grabNGoIndex < mealEndIndex && grabNGoIndex > 0)
+                {
+                    mealEndIndex = grabNGoIndex;
+                }
 
                 displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
 
@@ -600,6 +620,11 @@ namespace SouthernCuisine
                 mealStartIndex = dayMenu.IndexOf("m.<", mealStartIndex) + 2;
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
                 mealEndIndex = dayMenu.IndexOf("</p>", mealStartIndex);
+                int supperIndex = dayMenu.IndexOf("Supper", mealStartIndex);
+                if (supperIndex < mealEndIndex && supperIndex > 0)
+                {
+                    mealEndIndex = supperIndex;
+                }
 
                 displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
 
@@ -640,6 +665,11 @@ namespace SouthernCuisine
                 if (dayMenu.Substring(mealStartIndex + 10, 14) == "Served at KR's")
                 {
                     mealStartIndex += 10;
+                    mealEndIndex = dayMenu.IndexOf("</strong>", mealStartIndex);
+                    mealEndIndex = findEndOfHTMLTags(dayMenu, mealEndIndex);
+                }
+                else if(dayMenu.Substring(mealStartIndex, 27) == "Supper served in KR's Place")
+                {
                     mealEndIndex = dayMenu.IndexOf("</strong>", mealStartIndex);
                     mealEndIndex = findEndOfHTMLTags(dayMenu, mealEndIndex);
                 }
@@ -761,6 +791,16 @@ namespace SouthernCuisine
                 }
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
                 mealEndIndex = dayMenu.IndexOf("</ul>");
+                int saladBarIndex = dayMenu.IndexOf("Salad Bar", mealStartIndex);
+                int lunchIndex = dayMenu.IndexOf("Lunch", mealStartIndex);
+                if (saladBarIndex < mealEndIndex && saladBarIndex > 0)
+                {
+                    mealEndIndex = saladBarIndex;
+                }
+                else if (lunchIndex < mealEndIndex && lunchIndex > 0)
+                {
+                    mealEndIndex = lunchIndex;
+                }
 
                 displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
                 displayMenu = displayMenu.Replace("&amp;", "&");
@@ -821,6 +861,11 @@ namespace SouthernCuisine
                 }
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
                 mealEndIndex = dayMenu.IndexOf("</ul>", mealStartIndex);
+                int supperIndex = dayMenu.IndexOf("Supper", mealStartIndex);
+                if (supperIndex < mealEndIndex && supperIndex > 0)
+                {
+                    mealEndIndex = supperIndex;
+                }
 
                 displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
                 displayMenu = displayMenu.Replace("&amp;", "&");

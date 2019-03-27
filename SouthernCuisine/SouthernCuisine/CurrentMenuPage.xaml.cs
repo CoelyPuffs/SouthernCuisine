@@ -16,6 +16,9 @@ namespace SouthernCuisine
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CurrentMenuPage : ContentPage
 	{
+        List<string> allCafMeals = new List<string>();
+        List<string> allVMMeals = new List<string>();
+
         public CurrentMenuPage ()
 		{
 			InitializeComponent ();
@@ -105,20 +108,14 @@ namespace SouthernCuisine
             WebClient client = new WebClient();
             DateTime today = DateTime.Now;
             int hour = today.Hour;
-
-            // For testing purposes
-            // hour = 10;
-
             int minutes = today.Minute;
             string dayToday = today.DayOfWeek.ToString();
 
-            //START TestButton Function
-            /*if (TestingButton.IsToggled)
-            {
-                hour = 23;
-                dayToday = "Monday";
-            }*/
-            //END TestButton Function
+
+            // For testing purposes
+            // hour = 15;
+            // dayToday = "Saturday";
+
 
             if (dayToday == "Saturday")
             {
@@ -126,6 +123,7 @@ namespace SouthernCuisine
             }
 
             string fullCafMenu = client.DownloadString("http://www.southern.edu/administration/food/");
+            allCafMeals = new List<string>();
             List<string> currentCafMeal = getCafMeal(fullCafMenu, dayToday, hour, minutes);
             if (currentCafMeal.Count == 0)
             {
@@ -138,6 +136,7 @@ namespace SouthernCuisine
             }
 
             string fullVMMenu = client.DownloadString("http://www.southern.edu/administration/food/deli.html");
+            allVMMeals = new List<string>();
             List<string> currentVMMeal = getVMMeal(fullVMMenu, dayToday, hour, minutes); //error here
             if (currentVMMeal.Count == 0)
             {
@@ -166,6 +165,7 @@ namespace SouthernCuisine
             {
                 List<string> meal = new List<string>();
                 string mealName = cafDayMenu.Substring(cafDayMenu.LastIndexOf('>', findBeginOfHTMLTags(cafDayMenu, cafDayMenu.IndexOf(mealtime.ToString().Substring(1)))) + 1, findBeginOfHTMLTags(cafDayMenu, cafDayMenu.IndexOf(mealtime.ToString().Substring(1))) - cafDayMenu.LastIndexOf('>', findBeginOfHTMLTags(cafDayMenu, cafDayMenu.IndexOf(mealtime.ToString().Substring(1)))) - 1);
+                allCafMeals.Add(mealName);
                 if (mealName != "Grab n Go" && mealName != "International Bar" && mealName != "Deli at the Village Market" && mealName != "KR's" && mealName != "Served at KR's ")
                 {
                     meal = new List<string>{ mealName, mealtime.ToString().Substring(1)};
@@ -193,6 +193,8 @@ namespace SouthernCuisine
 
             // Edge cases: Sabbath Supper
             //              Carry over a day
+            //              Note: not actually done
+
             return mealNamesTimes[mealTime];
         }
 
@@ -206,7 +208,7 @@ namespace SouthernCuisine
             VMDayMenu = VMDayMenu.Replace("&nbsp;", " ");
 
             var VMTimeMatch = Regex.Matches(VMDayMenu, @"\s[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.|a\.m|p\.m)");
-            // ^ error here
+            // ^ error here (fixed now? I forgot to check this)
 
             List<List<string>> mealNamesTimes = new List<List<string>>();
 
@@ -215,6 +217,7 @@ namespace SouthernCuisine
                 List<string> meal = new List<string>();
                 int beginTimeIndex = VMDayMenu.IndexOf(mealtime.ToString());
                 string mealName = VMDayMenu.Substring(VMDayMenu.LastIndexOf('>', beginTimeIndex) + 1, beginTimeIndex - (VMDayMenu.LastIndexOf('>', beginTimeIndex) + 1));
+                allVMMeals.Add(mealName);
                 if (mealName != "Salad Bar Served" && mealName != "Salad Bar")
                 {
                     meal = new List<string> { mealName, mealtime.ToString().Substring(1) };
@@ -243,13 +246,14 @@ namespace SouthernCuisine
             // Edge cases: Sabbath Supper
             //              Carry over a day
             //              Carry over into Sabbath
+            //              Note: not actually done
+
             return mealNamesTimes[mealTime];
         }
 
         public void setCafMenu(string fullCafMenu, string dayToday, string cafMeal, string cafTimes)
         {
-            string cafDayToday = dayToday;
-            int cafDayStartIndex = fullCafMenu.IndexOf("Menu for " + cafDayToday);
+            int cafDayStartIndex = fullCafMenu.IndexOf("Menu for " + dayToday);
             int cafDayEndIndex = fullCafMenu.IndexOf("</div>", cafDayStartIndex);
             string cafDayMenu = fullCafMenu.Substring(cafDayStartIndex, cafDayEndIndex - cafDayStartIndex);
             cafDayMenu = cafDayMenu.Replace("&nbsp;", " ");
@@ -268,6 +272,11 @@ namespace SouthernCuisine
                     cafMealEndIndex = cafDayMenu.IndexOf("</strong>", cafMealStartIndex);
                     cafMealEndIndex = findEndOfHTMLTags(cafDayMenu, cafMealEndIndex);
                 }
+                else if (cafDayMenu.Substring(cafMealStartIndex, 27) == "Supper served in KR's Place")
+                {
+                    cafMealEndIndex = cafDayMenu.IndexOf("</strong>", cafMealStartIndex);
+                    cafMealEndIndex = findEndOfHTMLTags(cafDayMenu, cafMealEndIndex);
+                }
                 else
                 {
                     cafMealStartIndex = cafDayMenu.IndexOf("<", cafMealStartIndex);
@@ -275,6 +284,14 @@ namespace SouthernCuisine
                     cafMealStartIndex = cafDayMenu.IndexOf("<", cafMealStartIndex);
                     cafMealStartIndex = findEndOfHTMLTags(cafDayMenu, cafMealStartIndex);
                     cafMealEndIndex = cafDayMenu.IndexOf("</p>", cafMealStartIndex);
+                    if (allCafMeals.IndexOf(cafMeal) < allCafMeals.Count - 1)
+                    {
+                        int nextMealIndex = cafDayMenu.IndexOf(allCafMeals[allCafMeals.IndexOf(cafMeal) + 1], cafMealStartIndex);
+                        if (nextMealIndex < cafMealEndIndex)
+                        {
+                            cafMealEndIndex = nextMealIndex;
+                        }
+                    }
                 }
 
                 displayCafMenu = cafDayMenu.Substring(cafMealStartIndex, cafMealEndIndex - cafMealStartIndex) + '\n';
@@ -289,6 +306,10 @@ namespace SouthernCuisine
                 displayCafMenu = "No food served here for this meal today";
             }
             string cafLabelText = cafMeal + " at the Cafeteria";
+            if (cafMeal == "Supper served in KR's Place")
+            {
+                cafLabelText = "Supper";
+            }
             if (cafTimes != "" && displayCafMenu != "No food served here for this meal today")
             {
                 cafLabelText += '\n' + cafTimes;
@@ -339,7 +360,7 @@ namespace SouthernCuisine
                         }
                         else
                         {
-                            VMMealStartIndex = VMMealStartIndex = VMDayMenu.IndexOf("m<", VMMealStartIndex) + 1;
+                            VMMealStartIndex = VMDayMenu.IndexOf("m<", VMMealStartIndex) + 1;
                         }
                     }
                     else
@@ -355,6 +376,14 @@ namespace SouthernCuisine
                 }
                 VMMealStartIndex = findEndOfHTMLTags(VMDayMenu, VMMealStartIndex);
                 VMMealEndIndex = VMDayMenu.IndexOf("</ul>", VMMealStartIndex);
+                if (allVMMeals.IndexOf(VMMeal) < allVMMeals.Count - 1)
+                {
+                    int nextMealIndex = VMDayMenu.IndexOf(allVMMeals[allVMMeals.IndexOf(VMMeal) + 1], VMMealStartIndex);
+                    if (nextMealIndex < VMMealEndIndex)
+                    {
+                        VMMealEndIndex = nextMealIndex;
+                    }
+                }
 
                 displayVMMenu = VMDayMenu.Substring(VMMealStartIndex, VMMealEndIndex - VMMealStartIndex) + '\n';
 
