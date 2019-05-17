@@ -208,7 +208,6 @@ namespace SouthernCuisine
             VMDayMenu = VMDayMenu.Replace("&nbsp;", " ");
 
             var VMTimeMatch = Regex.Matches(VMDayMenu, @"\s[123456789][1230:apm\s\.]*-\s*[123456789][1230:]*\s*(am|pm|a\.m\.|p\.m\.|a\.m|p\.m)");
-            // ^ error here (fixed now? I forgot to check this)
 
             List<List<string>> mealNamesTimes = new List<List<string>>();
 
@@ -375,7 +374,8 @@ namespace SouthernCuisine
                     }
                 }
                 VMMealStartIndex = findEndOfHTMLTags(VMDayMenu, VMMealStartIndex);
-                VMMealEndIndex = VMDayMenu.IndexOf("</ul>", VMMealStartIndex);
+                VMMealEndIndex = VMDayMenu.Length - 1;
+                //VMMealEndIndex = VMDayMenu.IndexOf("</ul>", VMMealStartIndex);
                 if (allVMMeals.IndexOf(VMMeal) < allVMMeals.Count - 1)
                 {
                     int nextMealIndex = VMDayMenu.IndexOf(allVMMeals[allVMMeals.IndexOf(VMMeal) + 1], VMMealStartIndex);
@@ -384,6 +384,20 @@ namespace SouthernCuisine
                         VMMealEndIndex = nextMealIndex;
                     }
                 }
+
+                /*if (VMMealEndIndex == -1)
+                {
+                    VMMealEndIndex = VMDayMenu.Length - 1;
+                    List<string> mealList = new List<string> { "Breakfast", "Brunch", "Salad Bar", "Supper" };
+                    foreach (string mealName in mealList)
+                    {
+                        int mealIndex = VMDayMenu.IndexOf(mealName, VMMealStartIndex);
+                        if (mealIndex != -1 && mealIndex < VMMealEndIndex && mealName != VMMeal)
+                        {
+                            VMMealEndIndex = mealIndex;
+                        }
+                    }
+                }*/
 
                 displayVMMenu = VMDayMenu.Substring(VMMealStartIndex, VMMealEndIndex - VMMealStartIndex) + '\n';
 
