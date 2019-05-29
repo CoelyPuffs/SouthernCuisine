@@ -35,7 +35,7 @@
                 BackgroundColor="Transparent"/-->
             <Label 
                 x:Name="AboutLabel"
-                Text="App created by Kerstan Thio (coelypuffs) &#10;Icon designed by Adam van Iderstein &#10;Questions? Comments? Bugs? Email kthio@southern.edu"
+                Text="App created by Kerstan Thio (coelypuffs) &#10;Icon designed by Adam van Iderstein &#10;Questions? Comments? Bugs? Email kerstanthio@gmail.com"
                 TextColor="Gray"
                 VerticalOptions="EndAndExpand"
                 HorizontalOptions="CenterAndExpand"

@@ -217,7 +217,7 @@ namespace SouthernCuisine
                 int beginTimeIndex = VMDayMenu.IndexOf(mealtime.ToString());
                 string mealName = VMDayMenu.Substring(VMDayMenu.LastIndexOf('>', beginTimeIndex) + 1, beginTimeIndex - (VMDayMenu.LastIndexOf('>', beginTimeIndex) + 1));
                 allVMMeals.Add(mealName);
-                if (mealName != "Salad Bar Served" && mealName != "Salad Bar")
+                if (mealName != "Salad Bar Served" && mealName != "Salad Bar" && mealName != "Salad Bar ")
                 {
                     meal = new List<string> { mealName, mealtime.ToString().Substring(1) };
                 }
@@ -282,7 +282,11 @@ namespace SouthernCuisine
                     cafMealStartIndex = findEndOfHTMLTags(cafDayMenu, cafMealStartIndex);
                     cafMealStartIndex = cafDayMenu.IndexOf("<", cafMealStartIndex);
                     cafMealStartIndex = findEndOfHTMLTags(cafDayMenu, cafMealStartIndex);
-                    cafMealEndIndex = cafDayMenu.IndexOf("</p>", cafMealStartIndex);
+                    cafMealEndIndex = cafDayMenu.Length - 1;
+                    if (cafDayMenu.IndexOf("<strong>", cafMealStartIndex) != -1)
+                    {
+                        cafMealEndIndex = cafDayMenu.IndexOf("<strong>", cafMealStartIndex);
+                    }
                     if (allCafMeals.IndexOf(cafMeal) < allCafMeals.Count - 1)
                     {
                         int nextMealIndex = cafDayMenu.IndexOf(allCafMeals[allCafMeals.IndexOf(cafMeal) + 1], cafMealStartIndex);

@@ -497,7 +497,8 @@ namespace SouthernCuisine
                 dayToday = "Sabbath";
             }
             int dayStartIndex = fullMenu.IndexOf("Menu for " + dayToday);
-            int dayEndIndex = fullMenu.IndexOf("</div>", dayStartIndex);
+            int dayEndIndex = fullMenu.IndexOf("<div class", dayStartIndex);
+            //int dayEndIndex = fullMenu.IndexOf("</div>", dayStartIndex);
             string dayMenu = fullMenu.Substring(dayStartIndex, dayEndIndex - dayStartIndex);
             dayMenu = dayMenu.Replace("&nbsp;", " ");
 
@@ -516,7 +517,11 @@ namespace SouthernCuisine
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
                 mealStartIndex = dayMenu.IndexOf("<", mealStartIndex);
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
-                mealEndIndex = dayMenu.IndexOf("</p>", mealStartIndex);
+                mealEndIndex = dayMenu.Length - 1;
+                if (dayMenu.IndexOf("<strong>", mealStartIndex) != -1)
+                {
+                    mealEndIndex = dayMenu.IndexOf("<strong>", mealStartIndex);
+                }
                 int grabNGoIndex = dayMenu.IndexOf("Grab n Go", mealStartIndex);
                 int lunchIndex = dayMenu.IndexOf("Lunch", mealStartIndex);
                 if (grabNGoIndex < mealEndIndex && grabNGoIndex > 0)
@@ -569,7 +574,11 @@ namespace SouthernCuisine
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
                 mealStartIndex = dayMenu.IndexOf("<", mealStartIndex);
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
-                mealEndIndex = dayMenu.IndexOf("</p>", mealStartIndex);
+                mealEndIndex = dayMenu.Length - 1;
+                if (dayMenu.IndexOf("<strong>", mealStartIndex) != -1)
+                {
+                    mealEndIndex = dayMenu.IndexOf("<strong>", mealStartIndex);
+                }
                 int internationalBarIndex = dayMenu.IndexOf("International Bar", mealStartIndex);
                 int grabNGoIndex = dayMenu.IndexOf("Grab n Go", mealStartIndex);               
                 if (internationalBarIndex < mealEndIndex && internationalBarIndex > 0)
@@ -619,7 +628,11 @@ namespace SouthernCuisine
                 mealStartIndex = dayMenu.IndexOf(meal);
                 mealStartIndex = dayMenu.IndexOf("m.<", mealStartIndex) + 2;
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
-                mealEndIndex = dayMenu.IndexOf("</p>", mealStartIndex);
+                mealEndIndex = dayMenu.Length - 1;
+                if (dayMenu.IndexOf("<strong>", mealStartIndex) != -1)
+                {
+                    mealEndIndex = dayMenu.IndexOf("<strong>", mealStartIndex);
+                }
                 int supperIndex = dayMenu.IndexOf("Supper", mealStartIndex);
                 if (supperIndex < mealEndIndex && supperIndex > 0)
                 {
@@ -679,7 +692,11 @@ namespace SouthernCuisine
                     mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
                     mealStartIndex = dayMenu.IndexOf("<", mealStartIndex);
                     mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
-                    mealEndIndex = dayMenu.IndexOf("</p>", mealStartIndex);
+                    mealEndIndex = dayMenu.Length - 1;
+                    if (dayMenu.IndexOf("<strong>", mealStartIndex) != -1)
+                    {
+                        mealEndIndex = dayMenu.IndexOf("<strong>", mealStartIndex);
+                    }
                 }
 
                 displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
