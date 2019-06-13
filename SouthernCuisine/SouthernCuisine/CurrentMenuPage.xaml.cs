@@ -113,8 +113,8 @@ namespace SouthernCuisine
 
 
             // For testing purposes
-            // hour = 15;
-            // dayToday = "Saturday";
+            //hour = 7;
+            //dayToday = "Sunday";
 
 
             if (dayToday == "Saturday")
@@ -344,38 +344,26 @@ namespace SouthernCuisine
             if (VMDayMenu.IndexOf(VMMeal) != -1)
             {
                 VMMealStartIndex = VMDayMenu.IndexOf(VMMeal);
-                if (VMDayMenu.IndexOf("m<", VMMealStartIndex) < 0 && VMDayMenu.IndexOf("m <", VMMealStartIndex) < 0)
+                int[] indexArray = new int[4];
+                indexArray[0] = VMDayMenu.IndexOf("m<", VMMealStartIndex); // no space
+                indexArray[1] = VMDayMenu.IndexOf("m <", VMMealStartIndex); // space
+                indexArray[2] = VMDayMenu.IndexOf("m.<", VMMealStartIndex); // dot
+                indexArray[3] = VMDayMenu.IndexOf("m. <", VMMealStartIndex); // dot and space
+                int newIndex = -1;
+                for (int i = 0; i < 4; i++)
                 {
-                    if (VMMeal == "Supper")
+                    if ((newIndex < 0 && indexArray[i] > 0) || (newIndex > 0 && indexArray[i] < newIndex && indexArray[i] > 0))
                     {
-                        VMMealStartIndex = VMDayMenu.IndexOf("NO SUPPER", VMMealStartIndex);
+                        newIndex = indexArray[i];
                     }
                 }
-                else
+                VMMealStartIndex = newIndex;
+                VMMealStartIndex = VMDayMenu.IndexOf("<", VMMealStartIndex);
+
+                if (VMMeal == "g>Deli")
                 {
-                    int noSpaceIndex = VMDayMenu.IndexOf("m<", VMMealStartIndex);
-                    int spaceIndex = VMDayMenu.IndexOf("m <", VMMealStartIndex);
-                    if  (noSpaceIndex > 0)
-                    {
-                        if (spaceIndex > 0)
-                        {
-                            VMMealStartIndex = Math.Min(VMDayMenu.IndexOf("m<", VMMealStartIndex) + 1, VMDayMenu.IndexOf("m <", VMMealStartIndex) + 2);
-                        }
-                        else
-                        {
-                            VMMealStartIndex = VMDayMenu.IndexOf("m<", VMMealStartIndex) + 1;
-                        }
-                    }
-                    else
-                    {
-                        VMMealStartIndex = VMDayMenu.IndexOf("m <", VMMealStartIndex) + 2;
-                    }
-                    
-                    if (VMMeal == "g>Deli")
-                    {
-                        VMMealStartIndex = VMDayMenu.IndexOf("Hot Deck", VMMealStartIndex) + 8;
-                        VMMeal = "Deli";
-                    }
+                    VMMealStartIndex = VMDayMenu.IndexOf("Hot Deck", VMMealStartIndex) + 8;
+                    VMMeal = "Deli";
                 }
                 VMMealStartIndex = findEndOfHTMLTags(VMDayMenu, VMMealStartIndex);
                 VMMealEndIndex = VMDayMenu.Length - 1;
@@ -387,6 +375,10 @@ namespace SouthernCuisine
                     {
                         VMMealEndIndex = nextMealIndex;
                     }
+                }
+                if (VMDayMenu.IndexOf("</p>", VMMealStartIndex) > 0)
+                {
+                    VMMealEndIndex = VMDayMenu.IndexOf("</p>", VMMealStartIndex);
                 }
 
                 /*if (VMMealEndIndex == -1)
@@ -423,6 +415,10 @@ namespace SouthernCuisine
             if (VMTimes != "" && displayVMMenu != "No food served here for this meal today")
             {
                 VMLabelText += '\n' + VMTimes;
+            }
+            if (VMMeal == "Supper" && VMDayMenu.IndexOf("NO SUPPER") > 0)
+            {
+                displayVMMenu = "NO SUPPER";
             }
             CurrentVMMealLabel.Text = VMLabelText;
             CurrentVMLabel.Text = displayVMMenu;

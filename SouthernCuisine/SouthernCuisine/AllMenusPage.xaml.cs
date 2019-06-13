@@ -773,7 +773,25 @@ namespace SouthernCuisine
                 meal = "Deli";
                 mealStartIndex = dayMenu.IndexOf("Hot Deck", mealStartIndex) + 8;
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
-                mealEndIndex = dayMenu.IndexOf("</ul>", mealStartIndex);
+                mealEndIndex = dayMenu.IndexOf("</p>", mealStartIndex);
+
+                displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
+                displayMenu = displayMenu.Replace("&amp;", "&");
+                displayMenu = displayMenu.Replace("&nbsp;", " ");
+                displayMenu = displayMenu.Replace("<br>", "\n");
+                displayMenu = displayMenu.Replace("</li>", "\n");
+                displayMenu = Regex.Replace(displayMenu, @"[^\S\n]{2,}", "");
+                displayMenu = Regex.Replace(displayMenu, @"\n{2,}", "\n");
+                displayMenu = Regex.Replace(displayMenu, @"<[^<>]*>", "");
+                displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
+            }
+            else if (dayMenu.IndexOf("BRUNCH") != -1)
+            {
+                mealStartIndex = dayMenu.IndexOf("BRUNCH");
+                meal = "Brunch";
+                mealStartIndex = dayMenu.IndexOf("Hot Deck", mealStartIndex) + 8;
+                mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
+                mealEndIndex = dayMenu.IndexOf("</p>", mealStartIndex);
 
                 displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
                 displayMenu = displayMenu.Replace("&amp;", "&");
@@ -789,25 +807,51 @@ namespace SouthernCuisine
             {
                 meal = "Breakfast";
                 mealStartIndex = dayMenu.IndexOf(meal);
-                int noSpaceIndex = dayMenu.IndexOf("m<", mealStartIndex);
-                int spaceIndex = dayMenu.IndexOf("m <", mealStartIndex);
-                if (noSpaceIndex > 0)
+                int[] indexArray = new int[4];
+                indexArray[0] = dayMenu.IndexOf("m<", mealStartIndex); // no space
+                indexArray[1] = dayMenu.IndexOf("m <", mealStartIndex); // space
+                indexArray[2] = dayMenu.IndexOf("m.<", mealStartIndex); // dot
+                indexArray[3] = dayMenu.IndexOf("m. <", mealStartIndex); // dot and space
+                int newIndex = -1;
+                for (int i = 0; i < 4; i++)
+                {
+                    if ((newIndex < 0 && indexArray[i] > 0) || (newIndex > 0 && indexArray[i] < newIndex && indexArray[i] > 0))
+                    {
+                        newIndex = indexArray[i];
+                    }
+                }
+                mealStartIndex = newIndex;
+                mealStartIndex = dayMenu.IndexOf("<", mealStartIndex);
+                /*if (noSpaceIndex > 0)
                 {
                     if (spaceIndex > 0)
                     {
-                        mealStartIndex = Math.Min(dayMenu.IndexOf("m<", mealStartIndex) + 1, dayMenu.IndexOf("m <", mealStartIndex) + 2);
+                        if (dotIndex > 0)
+                        {
+                            if (dotSpaceIndex > 0)
+                            {
+                                mealStartIndex = Math.Min(Math.Min(dayMenu.IndexOf("m<", mealStartIndex) + 1, dayMenu.IndexOf("m <", mealStartIndex) + 2), Math.Min(dayMenu.IndexOf("m.<", mealStartIndex) + 2, dayMenu.IndexOf("m. <", mealStartIndex) + 3));
+                            }
+                        }
                     }
                     else
                     {
-                        mealStartIndex = mealStartIndex = dayMenu.IndexOf("m<", mealStartIndex) + 1;
+                        mealStartIndex = dayMenu.IndexOf("m<", mealStartIndex) + 1;
                     }
                 }
                 else
                 {
                     mealStartIndex = dayMenu.IndexOf("m <", mealStartIndex) + 2;
-                }
+                }*/
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
-                mealEndIndex = dayMenu.Length - 1;
+                if (dayMenu.IndexOf("</p>", mealStartIndex) > 0)
+                {
+                    mealEndIndex = dayMenu.IndexOf("</p>", mealStartIndex);
+                }
+                else
+                {
+                    mealEndIndex = dayMenu.Length - 1;
+                }
                 //mealEndIndex = dayMenu.IndexOf("</ul>");
                 int saladBarIndex = dayMenu.IndexOf("Salad Bar", mealStartIndex);
                 int lunchIndex = dayMenu.IndexOf("Lunch", mealStartIndex);
@@ -841,7 +885,7 @@ namespace SouthernCuisine
                 {
                     breakfastTime = dayMenu.Substring(dayMenu.IndexOf(meal) + VMBreakfastTimeMatch.Index, VMBreakfastTimeMatch.Length);
                 }
-                string breakfastLabelText = "Breakfast at the Village Market Deli";
+                string breakfastLabelText = meal + " at the Village Market Deli";
                 if (breakfastTime != "")
                 {
                     breakfastLabelText += '\n' + breakfastTime;
@@ -860,7 +904,22 @@ namespace SouthernCuisine
             if (dayMenu.IndexOf(meal) != -1)
             {
                 mealStartIndex = dayMenu.IndexOf(meal);
-                int noSpaceIndex = dayMenu.IndexOf("m<", mealStartIndex);
+                int[] indexArray = new int[4];
+                indexArray[0] = dayMenu.IndexOf("m<", mealStartIndex); // no space
+                indexArray[1] = dayMenu.IndexOf("m <", mealStartIndex); // space
+                indexArray[2] = dayMenu.IndexOf("m.<", mealStartIndex); // dot
+                indexArray[3] = dayMenu.IndexOf("m. <", mealStartIndex); // dot and space
+                int newIndex = -1;
+                for (int i = 0; i < 4; i++)
+                {
+                    if ((newIndex < 0 && indexArray[i] > 0) || (newIndex > 0 && indexArray[i] < newIndex && indexArray[i] > 0))
+                    {
+                        newIndex = indexArray[i];
+                    }
+                }
+                mealStartIndex = newIndex;
+                mealStartIndex = dayMenu.IndexOf("<", mealStartIndex);
+                /*int noSpaceIndex = dayMenu.IndexOf("m<", mealStartIndex);
                 int spaceIndex = dayMenu.IndexOf("m <", mealStartIndex);
                 if (noSpaceIndex > 0)
                 {
@@ -876,9 +935,16 @@ namespace SouthernCuisine
                 else
                 {
                     mealStartIndex = dayMenu.IndexOf("m <", mealStartIndex) + 2;
-                }
+                }*/
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
-                mealEndIndex = dayMenu.Length - 1;
+                if (dayMenu.IndexOf("</p>", mealStartIndex) > 0)
+                {
+                    mealEndIndex = dayMenu.IndexOf("</p>", mealStartIndex);
+                }
+                else
+                {
+                    mealEndIndex = dayMenu.Length - 1;
+                }
                 //mealEndIndex = dayMenu.IndexOf("</ul>", mealStartIndex);
                 int supperIndex = dayMenu.IndexOf("Supper", mealStartIndex);
                 if (supperIndex < mealEndIndex && supperIndex > 0)
@@ -952,7 +1018,23 @@ namespace SouthernCuisine
             if (dayMenu.IndexOf(meal) != -1)
             {
                 mealStartIndex = dayMenu.IndexOf(meal);
-                if (dayMenu.IndexOf("m<", mealStartIndex) < 0 && dayMenu.IndexOf("m <", mealStartIndex) < 0)
+                int[] indexArray = new int[4];
+                indexArray[0] = dayMenu.IndexOf("m<", mealStartIndex); // no space
+                indexArray[1] = dayMenu.IndexOf("m <", mealStartIndex); // space
+                indexArray[2] = dayMenu.IndexOf("m.<", mealStartIndex); // dot
+                indexArray[3] = dayMenu.IndexOf("m. <", mealStartIndex); // dot and space
+                int newIndex = -1;
+                for (int i = 0; i < 4; i++)
+                {
+                    if ((newIndex < 0 && indexArray[i] > 0) || (newIndex > 0 && indexArray[i] < newIndex && indexArray[i] > 0))
+                    {
+                        newIndex = indexArray[i];
+                    }
+                }
+                mealStartIndex = newIndex;
+                mealStartIndex = dayMenu.IndexOf("<", mealStartIndex);
+                /*//if (dayMenu.IndexOf("m<", mealStartIndex) < 0 && dayMenu.IndexOf("m <", mealStartIndex) < 0)
+                if (dayMenu.IndexOf("NO SUPPER", mealStartIndex) >= 0) 
                 {
                     mealStartIndex = dayMenu.IndexOf("NO SUPPER", mealStartIndex);
                 }
@@ -975,9 +1057,16 @@ namespace SouthernCuisine
                     {
                         mealStartIndex = dayMenu.IndexOf("m <", mealStartIndex) + 2;
                     }
-                }
+                }*/
                 mealStartIndex = findEndOfHTMLTags(dayMenu, mealStartIndex);
-                mealEndIndex = dayMenu.Length - 1;
+                if (dayMenu.IndexOf("</p>", mealStartIndex) > 0)
+                {
+                    mealEndIndex = dayMenu.IndexOf("</p>", mealStartIndex);
+                }
+                else
+                {
+                    mealEndIndex = dayMenu.Length - 1;
+                }
                 //mealEndIndex = dayMenu.IndexOf("</ul>", mealStartIndex);
 
                 displayMenu = dayMenu.Substring(mealStartIndex, mealEndIndex - mealStartIndex);
@@ -1007,6 +1096,13 @@ namespace SouthernCuisine
                 }
                 SupperLabel.Text = supperLabelText;
                 SupperMenuLabel.Text = displayMenu;
+            }
+            else if (dayMenu.IndexOf("NO SUPPER") > 0)
+            {
+                SupperLabel.IsVisible = true;
+                SupperMenuLabel.IsVisible = true;
+                SupperLabel.Text = "Supper at the Village Market Deli";
+                SupperMenuLabel.Text = "NO SUPPER";
             }
             else
             {
