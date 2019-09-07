@@ -113,8 +113,8 @@ namespace SouthernCuisine
 
 
             // For testing purposes
-            //hour = 7;
-            //dayToday = "Sunday";
+            // hour = 5;
+            // dayToday = "Friday";
 
 
             if (dayToday == "Saturday")
@@ -137,7 +137,7 @@ namespace SouthernCuisine
 
             string fullVMMenu = client.DownloadString("http://www.southern.edu/administration/food/deli.html");
             allVMMeals = new List<string>();
-            List<string> currentVMMeal = getVMMeal(fullVMMenu, dayToday, hour, minutes); //error here
+            List<string> currentVMMeal = getVMMeal(fullVMMenu, dayToday, hour, minutes);
             if (currentVMMeal.Count == 0)
             {
                 CurrentVMMealLabel.Text = "Village Market Deli";
@@ -153,7 +153,7 @@ namespace SouthernCuisine
         {
             string cafDayToday = dayToday;
             int cafDayStartIndex = fullCafMenu.IndexOf("Menu for " + cafDayToday);
-            int cafDayEndIndex = fullCafMenu.IndexOf("</div>", cafDayStartIndex);
+            int cafDayEndIndex = fullCafMenu.IndexOf("class", cafDayStartIndex);
             string cafDayMenu = fullCafMenu.Substring(cafDayStartIndex, cafDayEndIndex - cafDayStartIndex);
             cafDayMenu = cafDayMenu.Replace("&nbsp;", " ");
 
@@ -253,7 +253,7 @@ namespace SouthernCuisine
         public void setCafMenu(string fullCafMenu, string dayToday, string cafMeal, string cafTimes)
         {
             int cafDayStartIndex = fullCafMenu.IndexOf("Menu for " + dayToday);
-            int cafDayEndIndex = fullCafMenu.IndexOf("</div>", cafDayStartIndex);
+            int cafDayEndIndex = fullCafMenu.IndexOf("class", cafDayStartIndex);
             string cafDayMenu = fullCafMenu.Substring(cafDayStartIndex, cafDayEndIndex - cafDayStartIndex);
             cafDayMenu = cafDayMenu.Replace("&nbsp;", " ");
 
@@ -302,7 +302,10 @@ namespace SouthernCuisine
                 displayCafMenu = displayCafMenu.Replace("&amp;", "&");
                 displayCafMenu = displayCafMenu.Replace("<br>", "\n");
                 displayCafMenu = Regex.Replace(displayCafMenu, "<[^<>]*>", "");
+                displayCafMenu = Regex.Replace(displayCafMenu, @"\s+\n\s+", "\n");
+                displayCafMenu = Regex.Replace(displayCafMenu, @"\x20{2,}", "\x20");
                 displayCafMenu = Regex.Replace(displayCafMenu, @"\s+\z", "");
+                displayCafMenu = Regex.Replace(displayCafMenu, @"\A\s+", "");
             }
             else
             {

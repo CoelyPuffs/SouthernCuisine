@@ -538,7 +538,10 @@ namespace SouthernCuisine
                 displayMenu = displayMenu.Replace("&amp;", "&");
                 displayMenu = displayMenu.Replace("<br>", "\n");
                 displayMenu = Regex.Replace(displayMenu, "<[^<>]*>", "");
+                displayMenu = Regex.Replace(displayMenu, @"\s+\n\s+", "\n");
+                displayMenu = Regex.Replace(displayMenu, @"\x20{2,}", "\x20");
                 displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
+                displayMenu = Regex.Replace(displayMenu, @"\A\s+", "");
             }
             if (displayMenu != "")
             {
@@ -595,7 +598,10 @@ namespace SouthernCuisine
                 displayMenu = displayMenu.Replace("&amp;", "&");
                 displayMenu = displayMenu.Replace("<br>", "\n");
                 displayMenu = Regex.Replace(displayMenu, "<[^<>]*>", "");
+                displayMenu = Regex.Replace(displayMenu, @"\s+\n\s+", "\n");
+                displayMenu = Regex.Replace(displayMenu, @"\x20{2,}", "\x20");
                 displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
+                displayMenu = Regex.Replace(displayMenu, @"\A\s+", "");
             }
             if (displayMenu != "")
             {
@@ -644,7 +650,10 @@ namespace SouthernCuisine
                 displayMenu = displayMenu.Replace("&amp;", "&");
                 displayMenu = displayMenu.Replace("<br>", "\n");
                 displayMenu = Regex.Replace(displayMenu, "<[^<>]*>", "");
+                displayMenu = Regex.Replace(displayMenu, @"\s+\n\s+", "\n");
+                displayMenu = Regex.Replace(displayMenu, @"\x20{2,}", "\x20");
                 displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
+                displayMenu = Regex.Replace(displayMenu, @"\A\s+", "");
             }
             if (displayMenu != "")
             {
@@ -675,16 +684,10 @@ namespace SouthernCuisine
             if (dayMenu.IndexOf(meal) != -1)
             {
                 mealStartIndex = dayMenu.IndexOf(meal);
-                if (dayMenu.Substring(mealStartIndex + 10, 14) == "Served at KR's")
+                if (dayMenu.IndexOf("KR's Place", mealStartIndex) > mealStartIndex)
                 {
-                    mealStartIndex += 10;
-                    mealEndIndex = dayMenu.IndexOf("</strong>", mealStartIndex);
-                    mealEndIndex = findEndOfHTMLTags(dayMenu, mealEndIndex);
-                }
-                else if(dayMenu.Substring(mealStartIndex, 27) == "Supper served in KR's Place")
-                {
-                    mealEndIndex = dayMenu.IndexOf("</strong>", mealStartIndex);
-                    mealEndIndex = findEndOfHTMLTags(dayMenu, mealEndIndex);
+                    mealStartIndex = dayMenu.IndexOf("KR's Place", mealStartIndex);
+                    mealEndIndex = dayMenu.IndexOf("KR's Place", mealStartIndex) + 10;
                 }
                 else
                 {
@@ -704,7 +707,10 @@ namespace SouthernCuisine
                 displayMenu = displayMenu.Replace("&amp;", "&");
                 displayMenu = displayMenu.Replace("<br>", "\n");
                 displayMenu = Regex.Replace(displayMenu, "<[^<>]*>", "");
+                displayMenu = Regex.Replace(displayMenu, @"\s+\n\s+", "\n");
+                displayMenu = Regex.Replace(displayMenu, @"\x20{2,}", "\x20");
                 displayMenu = Regex.Replace(displayMenu, @"\s+\z", "");
+                displayMenu = Regex.Replace(displayMenu, @"\A\s+", "");
             }
             if (displayMenu != "")
             {
